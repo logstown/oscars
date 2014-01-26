@@ -1,0 +1,22 @@
+<div class="container">
+	fsd
+	<scoreboard></scoreboard>
+</div>
+
+<h1 class="text-center">Awards</h1>
+
+<div style="display: inline-block; vertical-align: top; padding: 20px; width: 33%;" ng-repeat="(name,award) in awards">
+	<h2>{{name}}</h2>
+
+	<div ng-repeat="nom in award.nominees" class="radio">
+		<label> 
+			<input type="radio" ng-model="user[name]" value="{{nom.movie}}" name="{{name}}"> 
+			<em>{{nom.movie}}</em> - ({{nom.team}}) 
+		</label>
+	</div>
+</div>
+
+	<pre>
+		{{user | json}}
+		{{awards.length}}
+	</pre>

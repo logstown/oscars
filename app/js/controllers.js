@@ -23,7 +23,71 @@ angular.module('myApp.controllers', [])
       };
    }])
 
-   .controller('LoginCtrl', ['$scope', 'loginService', '$location', function($scope, loginService, $location) {
+  .controller('OscarsCtrl', ['$scope', 'syncData', '$firebase', '$filter', function($scope, syncData, $firebase, $filter) {
+      syncData(['users', $scope.auth.user.uid]).$bind($scope, 'user');
+      // syncData('awards').$bind($scope, 'awards');
+
+      var userRef = new Firebase('https://oscars.firebaseio.com/users')
+      var awardsRef = new Firebase('https://oscars.firebaseio.com/awards')
+      $scope.usersd = $firebase(userRef);
+      $scope.awards = $firebase(awardsRef)
+      $scope.my = { favorite: 'unicorns' };
+
+      $scope.initialized = false;
+
+      function getUserScores() {
+         var awardsKeys = $scope.awards.$getIndex(); 
+         var userKeys = $scope.usersd.$getIndex();
+
+         var userScores = []
+
+         angular.forEach(userKeys, function(key) {
+            var user = $scope.usersd[key]
+
+            var score = 0;
+
+            angular.forEach(awardsKeys, function(key) {
+               var award = $scope.awards[key];
+               if(award.winner === user[key])
+                  score += 1;
+            })
+
+            userScores.push({name: user.name, score: score})
+         })
+
+         userScores.sort(function(a,b) {
+            return d3.descending(a.score, b.score)
+         })
+
+         $scope.userScores = userScores
+
+      }
+
+      $scope.usersd.$on("loaded", function() {
+        // angular.forEach($scope.usersd, function(deal, key) {
+        //  console.log(deal.name)
+        // })
+
+
+        // angular.forEach(keys, function(deal, key) {
+        //  console.log($scope.usersd[deal])
+        // })
+
+         $scope.awards.$on("loaded", function() {
+            getUserScores();
+
+            $scope.awards.$on("change", function() {
+               getUserScores();
+            })
+         })
+      });
+
+
+
+
+  }])
+
+   .controller('LoginCtrl', ['$scope', 'loginService', '$location', 'firebaseRef', function($scope, loginService, $location, firebaseRef) {
       $scope.email = null;
       $scope.pass = null;
       $scope.confirm = null;
@@ -58,6 +122,8 @@ angular.module('myApp.controllers', [])
                   // must be logged in before I can write to my profile
                   $scope.login(function() {
                      loginService.createProfile(user.uid, user.email);
+                     firebaseRef('users/'+user.uid+'/picks').set({});
+
                      $location.path('/account');
                   });
                }
@@ -81,6 +147,8 @@ angular.module('myApp.controllers', [])
 
    .controller('AccountCtrl', ['$scope', 'loginService', 'syncData', '$location', function($scope, loginService, syncData, $location) {
       syncData(['users', $scope.auth.user.uid]).$bind($scope, 'user');
+
+      console.log($scope.auth.user)
 
       $scope.logout = function() {
          loginService.logout();

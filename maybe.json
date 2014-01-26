@@ -1,0 +1,610 @@
+{
+    "ORIGINAL SCORE": {
+        "nominees": [
+            {
+                "movie": "The Book Thief",
+                "team": "John Williams"
+            },
+            {
+                "movie": "Gravity",
+                "team": "Steven Price"
+            },
+            {
+                "movie": "Her",
+                "team": "William Butler, Owen Pallett"
+            },
+            {
+                "movie": "Philomena",
+                "team": "Alexandre Desplat"
+            },
+            {
+                "movie": "Saving Mr. Banks",
+                "team": "Thomas Newman"
+            }
+        ],
+        "winner": 0
+    },
+    "ACTRESS (Actress in a Leading Role)": {
+        "nominees": [
+            {
+                "movie": "Amy Adams",
+                "team": "American Hustle"
+            },
+            {
+                "movie": "Cate Blanchett",
+                "team": "Blue Jasmine"
+            },
+            {
+                "movie": "Sandra Bullock",
+                "team": "Gravity"
+            },
+            {
+                "movie": "Judi Dench",
+                "team": "Philomena"
+            },
+            {
+                "movie": "Meryl Streep",
+                "team": "August: Osage County"
+            }
+        ],
+        "winner": 0
+    },
+    "ORIGINAL SONG": {
+        "nominees": [
+            {
+                "movie": "\"Alone Yet Not Alone\"",
+                "team": "Alone Yet Not Alone"
+            },
+            {
+                "movie": "\"Happy\"",
+                "team": "Despicable Me 2"
+            },
+            {
+                "movie": "\"Let It Go\"",
+                "team": "Frozen"
+            },
+            {
+                "movie": "\"The Moon Song\"",
+                "team": "Her"
+            },
+            {
+                "movie": "\"Ordinary Love\"",
+                "team": "Mandela: Long Walk to Freedom"
+            }
+        ],
+        "winner": 0
+    },
+    "VISUAL EFFECTS": {
+        "nominees": [
+            {
+                "movie": "Gravity",
+                "team": "Tim Webber, Chris Lawrence, Dave Shirk, Neil Corbould"
+            },
+            {
+                "movie": "The Hobbit: The Desolation of Smaug",
+                "team": "Joe Letteri, Eric Saindon, David Clayton, Eric Reynolds"
+            },
+            {
+                "movie": "Iron Man 3",
+                "team": "Christopher Townsend, Guy Williams, Erik Nash, Dan Sudick"
+            },
+            {
+                "movie": "The Lone Ranger",
+                "team": "Tim Alexander, Gary Brozenich, Edson Williams, John Frazier"
+            },
+            {
+                "movie": "Star Trek: Into Darkness",
+                "team": "Roger Guyett, Patrick Tubach, Ben Grossmann, Burt Dalton"
+            }
+        ],
+        "winner": 0
+    },
+    "SOUND MIXING": {
+        "nominees": [
+            {
+                "movie": "Captain Phillips",
+                "team": "Chris Burdon, Mark Taylor, Mike Prestwood Smith, Chris Munro"
+            },
+            {
+                "movie": "Gravity",
+                "team": "Skip Lievsay, Niv Adiri, Christopher Benstead, Chris Munro"
+            },
+            {
+                "movie": "The Hobbit: The Desolation of Smaug",
+                "team": "Christopher Boyes, Michael Hedges, Michael Semanick, Tony Johnson"
+            },
+            {
+                "movie": "Inside Llewyn Davis",
+                "team": "Skip Lievsay, Greg Orloff, Peter F. Kurland"
+            },
+            {
+                "movie": "Lone Survivor",
+                "team": "Andy Koyama, Beau Borders, David Brownlow"
+            }
+        ],
+        "winner": 0
+    },
+    "FILM EDITING": {
+        "nominees": [
+            {
+                "movie": "American Hustle",
+                "team": "Jay Cassidy, Crispin Struthers, Alan Baumgarten"
+            },
+            {
+                "movie": "Captain Phillips",
+                "team": "Christopher Rouse"
+            },
+            {
+                "movie": "Dallas Buyers Club",
+                "team": "John Mac McMurphy, Martin Pensa"
+            },
+            {
+                "movie": "Gravity",
+                "team": "Alfonso Cuaron, Mark Sanger"
+            },
+            {
+                "movie": "12 Years a Slave",
+                "team": "Joe Walker"
+            }
+        ],
+        "winner": 0
+    },
+    "SUPPORTING ACTRESS (Actress in a Supporting Role)": {
+        "nominees": [
+            {
+                "movie": "Sally Hawkins",
+                "team": "Blue Jasmine"
+            },
+            {
+                "movie": "Jennifer Lawrence",
+                "team": "American Hustle"
+            },
+            {
+                "movie": "Lupita Nyong'o",
+                "team": "12 Years a Slave"
+            },
+            {
+                "movie": "Julia Roberts",
+                "team": "August: Osage County"
+            },
+            {
+                "movie": "June Squibb",
+                "team": "Nebraska"
+            }
+        ],
+        "winner": 0
+    },
+    "ORIGINAL SCREENPLAY": {
+        "nominees": [
+            {
+                "movie": "American Hustle",
+                "team": "Eric Warren Singer, David O. Russell"
+            },
+            {
+                "movie": "Blue Jasmine",
+                "team": "Woody Allen"
+            },
+            {
+                "movie": "Dallas Buyers Club",
+                "team": "Craig Borten, Melisa Wallack"
+            },
+            {
+                "movie": "Her",
+                "team": "Spike Jonze"
+            },
+            {
+                "movie": "Nebraska",
+                "team": "Bob Nelson"
+            }
+        ],
+        "winner": 0
+    },
+    "CINEMATOGRAPHY": {
+        "nominees": [
+            {
+                "movie": "The Grandmaster",
+                "team": "Philippe Le Sourd"
+            },
+            {
+                "movie": "Gravity",
+                "team": "Emmanuel Lubezki"
+            },
+            {
+                "movie": "Inside Llewyn Davis",
+                "team": "Bruno Delbonnel"
+            },
+            {
+                "movie": "Nebraska",
+                "team": "Phedon Papamichael"
+            },
+            {
+                "movie": "Prisoners",
+                "team": "Roger A. Deakins"
+            }
+        ],
+        "winner": 0
+    },
+    "ANIMATED FEATURE FILM": {
+        "nominees": [
+            {
+                "movie": "The Croods",
+                "team": "Chris Sanders, Kirk DeMicco, Kristine Belson"
+            },
+            {
+                "movie": "Despicable Me 2",
+                "team": "Chris Renaud, Pierre Coffin, Chris Meledandri"
+            },
+            {
+                "movie": "Ernest & Celestine",
+                "team": "Benjamin Renner, Didier Brunner"
+            },
+            {
+                "movie": "Frozen",
+                "team": "Chris Buck, Jennifer Lee, Peter Del Vechio"
+            },
+            {
+                "movie": "The Wind Rises",
+                "team": "Hayao Miyazaki, Toshio Suzuki"
+            }
+        ],
+        "winner": 0
+    },
+    "SUPPORTING ACTOR (Actor in a Supporting Role)": {
+        "nominees": [
+            {
+                "movie": "Barkhad Abdi",
+                "team": "Captain Phillips"
+            },
+            {
+                "movie": "Bradley Cooper",
+                "team": "American Hustle"
+            },
+            {
+                "movie": "Michael Fassbender",
+                "team": "12 Years a Slave"
+            },
+            {
+                "movie": "Jonah Hill",
+                "team": "The Wolf of Wall Street"
+            },
+            {
+                "movie": "Jared Leto",
+                "team": "Dallas Buyers Club"
+            }
+        ],
+        "winner": 0
+    },
+    "ACTOR (Actor in a Leading Role)": {
+        "nominees": [
+            {
+                "movie": "Christian Bale",
+                "team": "American Hustle"
+            },
+            {
+                "movie": "Bruce Dern",
+                "team": "Nebraska"
+            },
+            {
+                "movie": "Leonardo DiCaprio",
+                "team": "The Wolf of Wall Street"
+            },
+            {
+                "movie": "Chiwetel Ejiofor",
+                "team": "12 Years a Slave"
+            },
+            {
+                "movie": "Matthew McConaughey",
+                "team": "Dallas Buyers Club"
+            }
+        ],
+        "winner": 0
+    },
+    "PICTURE (Best Picture)": {
+        "nominees": [
+            {
+                "movie": "American Hustle",
+                "team": "Charles Roven, Richard Suckle, Megan Ellison, Jonathan Gordon"
+            },
+            {
+                "movie": "Captain Phillips",
+                "team": "Scott Rudin, Dana Brunetti, Michael De Luca"
+            },
+            {
+                "movie": "Dallas Buyers Club",
+                "team": "Robbie Brenner, Rachel Winter"
+            },
+            {
+                "movie": "Gravity",
+                "team": "Alfonso Cuaron, David Heyman"
+            },
+            {
+                "movie": "Her",
+                "team": "Megan Ellison, Spike Jonze, Vincent Landay"
+            },
+            {
+                "movie": "Nebraska",
+                "team": "Albert Berger, Ron Yerxa"
+            },
+            {
+                "movie": "Philomena",
+                "team": "Gabrielle Tana, Steve Coogan, Tracey Seaward"
+            },
+            {
+                "movie": "12 Years a Slave",
+                "team": "Brad Pitt, Dede Gardner, Jeremy Kleiner, Steve McQueen, Anthony Katagas"
+            },
+            {
+                "movie": "The Wolf of Wall Street",
+                "team": "Martin Scorsese, Leonardo DiCaprio, Joey McFarland, Emma Tillinger Kosoff"
+            }
+        ],
+        "winner": 0
+    },
+    "MAKEUP & HAIRSTYLING": {
+        "nominees": [
+            {
+                "movie": "Dallas Buyers Club",
+                "team": "Adruitha Lee, Robin Mathews"
+            },
+            {
+                "movie": "Jackass Presents: Bad Grandpa",
+                "team": "Stephen Prouty"
+            },
+            {
+                "movie": "The Lone Ranger",
+                "team": "Joel Harlow, Gloria Pasqua"
+            }
+        ],
+        "winner": 0
+    },
+    "SHORT FILM (Live Action)": {
+        "nominees": [
+            {
+                "movie": "Aquel No Era Yo (That Wasn't Me)",
+                "team": "Esteban Crespo"
+            },
+            {
+                "movie": "Avant Que De Tout Perdre (Just before Losing Everything)",
+                "team": "Xavier Legrand, Alexandre Gavras"
+            },
+            {
+                "movie": "Helium",
+                "team": "Anders Walter, Kim Magnusson"
+            },
+            {
+                "movie": "Pitääkö Mun Kaikki Hoitaa? (Do I Have to Take Care of Everything?)",
+                "team": "Selma Vilhunen, Kirsikka Saari"
+            },
+            {
+                "movie": "The Voorman Problem",
+                "team": "Mark Gill, Baldwin Li"
+            }
+        ],
+        "winner": 0
+    },
+    "COSTUME DESIGN": {
+        "nominees": [
+            {
+                "movie": "American Hustle",
+                "team": "Michael Wilkinson"
+            },
+            {
+                "movie": "The Grandmaster",
+                "team": "William Chang Suk Ping"
+            },
+            {
+                "movie": "The Great Gatsby",
+                "team": "Catherine Martin"
+            },
+            {
+                "movie": "The Invisible Woman",
+                "team": "Michael O'Connor"
+            },
+            {
+                "movie": "12 Years a Slave",
+                "team": "Patricia Norris"
+            }
+        ],
+        "winner": 0
+    },
+    "SHORT FILM (Animated)": {
+        "nominees": [
+            {
+                "movie": "Feral",
+                "team": "Daniel Sousa, Dan Golden"
+            },
+            {
+                "movie": "Get a Horse!",
+                "team": "Lauren MacMullan, Dorothy McKim"
+            },
+            {
+                "movie": "Mr. Hublot",
+                "team": "Laurent Witz, Alexandre Espigares"
+            },
+            {
+                "movie": "Possessions",
+                "team": "Shuhei Morita"
+            },
+            {
+                "movie": "Room on the Broom",
+                "team": "Max Lang, Jan Lachaeur"
+            }
+        ],
+        "winner": 0
+    },
+    "PRODUCTION DESIGN": {
+        "nominees": [
+            {
+                "movie": "American Hustle",
+                "team": "Production Design: Judy Becker; Set Decoration: Heather Loeffler"
+            },
+            {
+                "movie": "Gravity",
+                "team": "Production Design: Andy Nicholson; Set Decoration: Rosie Goodwin, Joanne Woollard"
+            },
+            {
+                "movie": "The Great Gatsby",
+                "team": "Production Design: Catherine Martin; Set Decoration: Beverley Dunn"
+            },
+            {
+                "movie": "Her",
+                "team": "Production Design: K.K. Barrett; Set Decoration: Gene Serdena"
+            },
+            {
+                "movie": "12 Years a Slave",
+                "team": "Production Design: Adam Stockhausen; Set Decoration: Alice Baker"
+            }
+        ],
+        "winner": 0
+    },
+    "SOUND EDITING": {
+        "nominees": [
+            {
+                "movie": "All Is Lost",
+                "team": "Steve Boeddeker, Richar Hymns"
+            },
+            {
+                "movie": "Captain Phillips",
+                "team": "Oliver Tarney"
+            },
+            {
+                "movie": "Gravity",
+                "team": "Glenn Freemantle"
+            },
+            {
+                "movie": "The Hobbit: The Desolation of Smaug",
+                "team": "Brent Burge"
+            },
+            {
+                "movie": "Lone Survivor",
+                "team": "Wylie Stateman"
+            }
+        ],
+        "winner": 0
+    },
+    "DIRECTING": {
+        "nominees": [
+            {
+                "movie": "12 Years a Slave",
+                "team": "Steve McQueen"
+            },
+            {
+                "movie": "American Hustle",
+                "team": "David O. Russell"
+            },
+            {
+                "movie": "Gravity",
+                "team": "Alfonso Cuaron"
+            },
+            {
+                "movie": "Nebraska",
+                "team": "Alexander Payne"
+            },
+            {
+                "movie": "The Wolf of Wall Street",
+                "team": "Martin Scorsese"
+            }
+        ],
+        "winner": 0
+    },
+    "FOREIGN LANGUAGE FILM": {
+        "nominees": [
+            {
+                "movie": "The Broken Circle Breakdown",
+                "team": "Belgium"
+            },
+            {
+                "movie": "The Great Beauty",
+                "team": "Italy"
+            },
+            {
+                "movie": "The Hunt",
+                "team": "Denmark"
+            },
+            {
+                "movie": "The Missing Picture",
+                "team": "Cambodia"
+            },
+            {
+                "movie": "Omar",
+                "team": "Palestine"
+            }
+        ],
+        "winner": 0
+    },
+    "DOCUMENTARY (Feature)": {
+        "nominees": [
+            {
+                "movie": "The Act of Killing",
+                "team": "Joshua Oppenheimer, Signe Byrge Sørensen"
+            },
+            {
+                "movie": "Cutie and the Boxer",
+                "team": "Zachary Heinzerling, Lydia Dean Pilcher"
+            },
+            {
+                "movie": "Dirty Wars",
+                "team": "Richard Rowley, Jeremy Scahill"
+            },
+            {
+                "movie": "The Square",
+                "team": "Jehane Noujaim, Karim Amer"
+            },
+            {
+                "movie": "20 Feet from Stardom",
+                "team": "Morgan Neville, Gil Friesen, Caitrin Rogers"
+            }
+        ],
+        "winner": 0
+    },
+    "ADAPTED SCREENPLAY": {
+        "nominees": [
+            {
+                "movie": "Before Midnight",
+                "team": "Richard Linklater, Julie Delpy, Ethan Hawke"
+            },
+            {
+                "movie": "Captain Phillips",
+                "team": "Billy Ray"
+            },
+            {
+                "movie": "Philomena",
+                "team": "Steve Coogan, Jeff Pope"
+            },
+            {
+                "movie": "12 Years a Slave",
+                "team": "John Ridley"
+            },
+            {
+                "movie": "The Wolf of Wall Street",
+                "team": "Terence Winter"
+            }
+        ],
+        "winner": 0
+    },
+    "DOCUMENTARY (Short Subject)": {
+        "nominees": [
+            {
+                "movie": "CaveDigger",
+                "team": "Jeffrey Karoff"
+            },
+            {
+                "movie": "Facing Fear",
+                "team": "Jason Cohen"
+            },
+            {
+                "movie": "Karama Has No Walls",
+                "team": "Sara Ishaq"
+            },
+            {
+                "movie": "The Lady in Number 6: Music Saved My Life",
+                "team": "Malcolm Clarke, Nicholas Reed"
+            },
+            {
+                "movie": "Prison Terminal: The Last Days of Private Jack Hall",
+                "team": "Edgar Barens"
+            }
+        ],
+        "winner": 0
+    }
+}

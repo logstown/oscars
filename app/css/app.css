@@ -1,6 +1,6 @@
 /* app css stylesheet */
 
-.hide {
+/*.hide {
    display: none;
 }
 
@@ -63,4 +63,8 @@ fieldset {
    float: left;
    margin-right: 25px;
    padding: 25px;
+}*/
+
+fieldset {
+  /*padding-right: 30px;*/
 }

@@ -26,5 +26,11 @@ angular.module('myApp.routes', ['ngRoute'])
          controller: 'LoginCtrl'
       });
 
+      $routeProvider.when('/oscars', {
+         authRequired: true,
+         templateUrl: 'partials/oscars.html',
+         controller: 'OscarsCtrl'
+      });
+
       $routeProvider.otherwise({redirectTo: '/home'});
    }]);
