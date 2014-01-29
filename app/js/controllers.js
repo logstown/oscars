@@ -23,15 +23,34 @@ angular.module('myApp.controllers', [])
       };
    }])
 
-  .controller('OscarsCtrl', ['$scope', 'syncData', '$firebase', '$filter', function($scope, syncData, $firebase, $filter) {
-      syncData(['users', $scope.auth.user.uid]).$bind($scope, 'user');
+  .controller('OscarsCtrl', ['$scope', 'syncData', '$firebase', '$filter', '$timeout', function($scope, syncData, $firebase, $filter, $timeout) {
+      // syncData(['users', $scope.auth.user.uid]).$bind($scope, 'user');
       // syncData('awards').$bind($scope, 'awards');
+
+      var ref = new Firebase('https://oscars.firebaseio.com/users/' + $scope.auth.user.uid )
+      var user = $firebase(ref)
+      user.$bind($scope, "user");
 
       var userRef = new Firebase('https://oscars.firebaseio.com/users')
       var awardsRef = new Firebase('https://oscars.firebaseio.com/awards')
       $scope.usersd = $firebase(userRef);
       $scope.awards = $firebase(awardsRef)
-      $scope.my = { favorite: 'unicorns' };
+
+      // $scope.$watch('user', function() {
+      //    console.log('here')
+      //    $scope.$apply(function() {
+      //       $scope.test = Object.keys($scope.user).length;
+      //    })
+      // })
+
+      $scope.time = new Date();
+      $scope.oscarStart = new Date(2014, 2, 2, 19)
+    
+      $scope.$watch('time', function(){
+        $timeout(function(){
+            $scope.time = new Date();
+        },1000);
+      });
 
       $scope.initialized = false;
 
@@ -64,14 +83,6 @@ angular.module('myApp.controllers', [])
       }
 
       $scope.usersd.$on("loaded", function() {
-        // angular.forEach($scope.usersd, function(deal, key) {
-        //  console.log(deal.name)
-        // })
-
-
-        // angular.forEach(keys, function(deal, key) {
-        //  console.log($scope.usersd[deal])
-        // })
 
          $scope.awards.$on("loaded", function() {
             getUserScores();

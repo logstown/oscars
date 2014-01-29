@@ -12,15 +12,15 @@ angular.module('myApp.directives', []).
 
 
  angular.module('myApp.directives', []).
-  directive('scoreboard', [ function() {
+  directive('scoreboard', ['$location', function($location) {
 	return {
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
-      	var w = element.parent().width();
-      	var h = 700;
+      	var w = element.parent().width() - 30;
+      	var h = 400	;
 
         var svg = d3.select(element[0]).append('svg')
-        	.attr('width', "100%")
+        	.attr('width', w)
         	.attr('height', h);
 
         scope.$watch('userScores', function(newval) {
@@ -34,7 +34,7 @@ angular.module('myApp.directives', []).
 
 	        		var yScale = d3.scale.ordinal()
 	        			.domain(d3.range(newval.length))
-	        			.rangeBands([0, h], 0.2)
+	        			.rangeBands([0, h], 0.1)
 
 	        		var xScale = d3.scale.linear()
 	        			.domain([0, max])
@@ -44,7 +44,7 @@ angular.module('myApp.directives', []).
 	        			.data(newval)
 	        			.enter()
 	        			.append('rect')
-	        			.style('fill', 'blue')
+	        			.style('fill', 'steelblue')
 	        			.attr('y', function(d,i) {
 	        				return yScale(i)
 	        			})
@@ -62,11 +62,18 @@ angular.module('myApp.directives', []).
 	        			.enter()
 	        			.append('text')
 	        			.attr('y', function(d, i) {
-	        				return yScale(i) + yScale.rangeBand()/2
+	        				return yScale(i) + yScale.rangeBand()*.6
 	        			})
 	        			.attr('x', 0)
 	        			.text(function(d) {
 	        				return d.name;
+	        			})
+	        			.style('font-size', (yScale.rangeBand()/4) + "px")
+	        			.style('cursor', 'pointer')
+	        			.on('click', function() {
+	        				scope.$apply(function() {
+		        				$location.path('/chat')
+	        				})
 	        			})
 
 	        		svg.append('g')
@@ -76,20 +83,20 @@ angular.module('myApp.directives', []).
 	        			.enter()
 	        			.append('text')
 	        			.attr('y', function(d, i) {
-	        				return yScale(i) + yScale.rangeBand()-20
+	        				return yScale(i) + yScale.rangeBand() *.85
 	        			})
 	        			.attr('x', function(d) {
 	        				var x = xScale(d.score) - yScale.rangeBand();
 
-	        				if(x < 50)
-	        					return 50;
+	        				if(x < 100)
+	        					return 100;
 	        				else
 	        					return x;
 	        			})
 	        			.text(function(d) {
 	        				return d.score
 	        			})
-	        			.style('font-size', yScale.rangeBand())
+	        			.style('font-size', yScale.rangeBand() + "px")
 
 	        		scope.initialized = true;
         		}
@@ -101,7 +108,7 @@ angular.module('myApp.directives', []).
 
 	        		var yScale = d3.scale.ordinal()
 	        			.domain(d3.range(newval.length))
-	        			.rangeBands([0, h], 0.2)
+	        			.rangeBands([0, h], 0.1)
 
 	        		var xScale = d3.scale.linear()
 	        			.domain([0, max])
@@ -133,13 +140,15 @@ angular.module('myApp.directives', []).
 	        			.data(newval)
 	        			.transition()
 	        			.attr('y', function(d, i) {
-	        				return yScale(i) + yScale.rangeBand()-20
+	        				return yScale(i) + yScale.rangeBand() * .85
 	        			})
 	        			.attr('x', function(d) {
-	        				if(d.score == 0) {
-	        					return 70;
-	        				}
-	        				return xScale(d.score) - 70
+	        				var x = xScale(d.score) - yScale.rangeBand();
+
+	        				if(x < 100)
+	        					return 100;
+	        				else
+	        					return x;
 	        			})
 	        			.text(function(d) {
 	        				return d.score

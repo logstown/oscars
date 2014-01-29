@@ -1,22 +1,24 @@
+<div style="width: 100%; background-color: #F2EB8D;" class="text-center">
+	<h1>Jenkins Oscar Competition</h1>
+</div>
+
+<div class="text-center">
+	<h3>STARTS IN: <timer end-time="oscarStart">{{days}} days, {{hours}} hours, {{minutes}} minutes, {{seconds}} seconds.</timer></h3>
+</div>
+
 <div class="container">
-	fsd
+	<div style="display: inline-block; vertical-align: top; padding: 20px; width: 33%;" ng-repeat="(name,award) in awards" ng-class="{green: user[name] == award.winner}">
+		<h4 style="border-bottom: 1px solid black;">{{name}}</h4>
+
+		<div ng-repeat="nom in award.nominees" class="radio">
+			<label> 
+				<input type="radio" ng-model="user[name]" value="{{nom.movie}}" name="{{name}}" ng-disabled="now > oscarStart"> 
+				<span style="text-transform: uppercase;" ng-class="{done: user[name]===nom.movie}">{{nom.movie}}</span> - <small><em>{{nom.team}}</em></small>
+			</label>
+		</div>
+	</div>
+
 	<scoreboard></scoreboard>
 </div>
 
-<h1 class="text-center">Awards</h1>
 
-<div style="display: inline-block; vertical-align: top; padding: 20px; width: 33%;" ng-repeat="(name,award) in awards">
-	<h2>{{name}}</h2>
-
-	<div ng-repeat="nom in award.nominees" class="radio">
-		<label> 
-			<input type="radio" ng-model="user[name]" value="{{nom.movie}}" name="{{name}}"> 
-			<em>{{nom.movie}}</em> - ({{nom.team}}) 
-		</label>
-	</div>
-</div>
-
-	<pre>
-		{{user | json}}
-		{{awards.length}}
-	</pre>
