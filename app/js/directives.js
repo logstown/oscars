@@ -17,147 +17,160 @@ angular.module('myApp.directives', []).
       restrict: 'E',
       link: function postLink(scope, element, attrs) {
       	var w = element.parent().width() - 30;
-      	var h = 400	;
+      	var margin = 10;
+
+      	var xScale = d3.scale.linear().range([0,(w-60)])
 
         var svg = d3.select(element[0]).append('svg')
         	.attr('width', w)
-        	.attr('height', h);
+
+        var rectsGroup = svg.append('g')
+        	.attr('clas', 'rects')
+
+        var picsGroup = svg.append('g')
+			.attr('class', 'pics')
+
+		var scoresGroup = svg.append('g')
+			.attr('class', 'scores')
+
+        var namesGroup = svg.append('g')
+            .attr('class', 'names')
+
+        var key = function(d) {
+        	return d.info.id;
+        }
+
+        var dur = 1000;
 
         scope.$watch('userScores', function(newval) {
-        	if(newval !== undefined) {
-
-        		if(!scope.initialized) {
-
-	        		var max = d3.max(newval, function(d) {
-	        			return d.score
-	        		})
-
-	        		var yScale = d3.scale.ordinal()
-	        			.domain(d3.range(newval.length))
-	        			.rangeBands([0, h], 0.1)
-
-	        		var xScale = d3.scale.linear()
-	        			.domain([0, max])
-	        			.range([0,w])
-
-	        		svg.selectAll('rect')
-	        			.data(newval)
-	        			.enter()
-	        			.append('rect')
-	        			.style('fill', 'steelblue')
-	        			.attr('y', function(d,i) {
-	        				return yScale(i)
-	        			})
-	        			.attr('x', 0)
-	        			.attr('height', yScale.rangeBand())
-	        			.attr('width', function(d) {
-	        				return xScale(d.score)
-	        			})
-
-	        		var names = svg.append('g')
-	        			.attr('class', 'names')
-
-	        		names.selectAll('text')
-	        			.data(newval)
-	        			.enter()
-	        			.append('text')
-	        			.attr('y', function(d, i) {
-	        				return yScale(i) + yScale.rangeBand()*.6
-	        			})
-	        			.attr('x', 0)
-	        			.text(function(d) {
-	        				return d.name;
-	        			})
-	        			.style('font-size', (yScale.rangeBand()/4) + "px")
-	        			.style('cursor', 'pointer')
-	        			.on('click', function() {
-	        				scope.$apply(function() {
-		        				$location.path('/chat')
-	        				})
-	        			})
-
-	        		svg.append('g')
-	        			.attr('class', 'scores')
-	        			.selectAll('text')
-	        			.data(newval)
-	        			.enter()
-	        			.append('text')
-	        			.attr('y', function(d, i) {
-	        				return yScale(i) + yScale.rangeBand() *.85
-	        			})
-	        			.attr('x', function(d) {
-	        				var x = xScale(d.score) - yScale.rangeBand();
-
-	        				if(x < 100)
-	        					return 100;
-	        				else
-	        					return x;
-	        			})
-	        			.text(function(d) {
-	        				return d.score
-	        			})
-	        			.style('font-size', yScale.rangeBand() + "px")
-
-	        		scope.initialized = true;
-        		}
-        		else {
-
-	        		var max = d3.max(newval, function(d) {
-	        			return d.score
-	        		})
-
-	        		var yScale = d3.scale.ordinal()
-	        			.domain(d3.range(newval.length))
-	        			.rangeBands([0, h], 0.1)
-
-	        		var xScale = d3.scale.linear()
-	        			.domain([0, max])
-	        			.range([0,w])
-
-	        		svg.selectAll('rect')
-	        			.data(newval)
-	        			.transition()
-	        			.attr('y', function(d,i) {
-	        				return yScale(i)
-	        			})
-	        			.attr('height', yScale.rangeBand())
-	        			.attr('width', function(d) {
-	        				return xScale(d.score)
-	        			})
-
-	        		svg.selectAll('g.names text')
-	        			.data(newval)
-	        			.transition()
-	        			.attr('y', function(d, i) {
-	        				return yScale(i) + yScale.rangeBand()/2
-	        			})
-	        			.attr('x', 0)
-	        			.text(function(d) {
-	        				return d.name
-	        			})
-
-	        		svg.selectAll('g.scores text')
-	        			.data(newval)
-	        			.transition()
-	        			.attr('y', function(d, i) {
-	        				return yScale(i) + yScale.rangeBand() * .85
-	        			})
-	        			.attr('x', function(d) {
-	        				var x = xScale(d.score) - yScale.rangeBand();
-
-	        				if(x < 100)
-	        					return 100;
-	        				else
-	        					return x;
-	        			})
-	        			.text(function(d) {
-	        				return d.score
-	        			})
-	        			.style('font-size', yScale.rangeBand())
-        		}
-
-
+        	if(newval === undefined) {
+        		return;
         	}
+
+            var h = newval.length * (50+margin);
+
+            svg.attr('height', h)		
+
+    		var max = d3.max(newval, function(d) {
+    			return d.score;
+    		})
+
+        	xScale.domain([0, 34])
+
+        	var rects = rectsGroup.selectAll('rect')
+    			.data(newval, key)
+    			
+    		rects.enter().append('rect')
+    			.style('fill', 'steelblue')
+    			.attr('x', 60)
+    			.attr('height', 50)
+
+
+    		rects.transition()
+    			.duration(dur)
+    			.attr('width', function(d) {
+					return xScale(d.score)
+				})
+				.transition()
+				.delay(dur)
+				.duration(function(d,i) {
+					return 500 + (i * 50)
+				})
+				.attr('y', function(d,i) {
+					return i * (50 + margin)
+				})
+
+			rects.exit().remove();
+
+
+
+    		var pics = picsGroup.selectAll('image')
+    			.data(newval, key)
+
+    		pics.enter().append('image')
+    			.attr('x', 0)
+    			// .text(function(d) {
+    			// 	return d.info.first_name;
+    			// })
+                .attr('xlink:href', function(d) {
+                    return d.pic;
+                })
+                .attr('width', 50)
+                .attr('height', 50)
+    			.style('cursor', 'pointer')
+    			.on('click', function(d) {
+    				scope.$apply(function() {
+        				$location.path('/picks/' + d.info.id)
+    				})
+    			})
+                .append('svg:title')
+                .text(function(d) {
+                    return d.info.name;
+                })
+
+    		pics.transition()
+    			.delay(dur)
+    			.duration(function(d,i) {
+					return 500 + (i * 50)
+				})
+	    		.attr('y', function(d, i) {
+					return i * (50 + margin)
+				})
+				// .style('font-size', (yScale.rangeBand()/4) + "px")
+
+			pics.exit().remove();
+
+
+
+    		var scores = scoresGroup.selectAll('text')
+    			.data(newval, key)
+    			
+    		scores.enter().append('text')
+    			
+    		scores.transition()
+    			.duration(dur)
+				.attr('x', function(d) {
+					var x = xScale(d.score) + 35;
+
+                    if(x < 60){
+                        return 60;
+                    }
+                    else {
+                        return x;
+                    }
+				})
+                .style('font-size', "32px")
+                .transition()
+                .delay(dur)
+				.text(function(d) {
+					return d.score
+				})
+				.duration(function(d,i) {
+					return 500 + (i * 50)
+				})
+	    		.attr('y', function(d, i) {
+					return i * (50 + margin) + 45;
+				})
+    	
+    		scores.exit().remove()
+
+            var names = namesGroup.selectAll('text')
+                .data(newval, key)
+
+            names.enter().append('text')
+                .attr('x', 60)
+                .text(function(d) {
+                    return d.info.name;
+                });
+
+            names.transition()
+                .delay(dur)
+                .duration(function(d,i) {
+                    return 500 + (i * 50)
+                })
+                .attr('y', function(d, i) {
+                    return (i * (50 + margin)) + 12
+                })
         })
       }
     };

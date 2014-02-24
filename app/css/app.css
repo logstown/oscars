@@ -9,6 +9,17 @@
   background-color: #B4F59A;
 }
 
+.red {
+	background-color: pink;
+}
+
+.correct {
+	/*color: green;
+	text-decoration: underline;
+	font-weight: bold;*/
+	background-color: #B4F59A;
+}
+
 html, body {
   background-color: #E6E5DC;
 }

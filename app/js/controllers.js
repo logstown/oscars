@@ -27,9 +27,30 @@ angular.module('myApp.controllers', [])
       // syncData(['users', $scope.auth.user.uid]).$bind($scope, 'user');
       // syncData('awards').$bind($scope, 'awards');
 
-      var ref = new Firebase('https://oscars.firebaseio.com/users/' + $scope.auth.user.uid )
+      var ref = new Firebase('https://oscars.firebaseio.com/users/' + $scope.auth.user.uid)
       var user = $firebase(ref)
-      user.$bind($scope, "user");
+      user.$bind($scope, "user").then(function() {
+         $scope.progress = function() {
+            var length = Object.keys($scope.user.picks).length - 1;
+            var type;
+
+            if(length < 8) {
+               type = 'danger'
+            }
+            else if(length < 16) {
+               type = 'warning'
+            }
+            else if(length < 24) {
+               type = 'info'
+            }
+            else {
+               type = 'success'
+            }
+
+            $scope.type = type;
+            return length;
+         }
+      });
 
       var userRef = new Firebase('https://oscars.firebaseio.com/users')
       var awardsRef = new Firebase('https://oscars.firebaseio.com/awards')
@@ -67,11 +88,11 @@ angular.module('myApp.controllers', [])
 
             angular.forEach(awardsKeys, function(key) {
                var award = $scope.awards[key];
-               if(award.winner === user[key])
-                  score += 1;
-            })
+               if(award.winner === user.picks[key])
+                  score += award.points;
+            });
 
-            userScores.push({name: user.name, score: score})
+            userScores.push({info: user.info, pic: user.icon, score: score})
          })
 
          userScores.sort(function(a,b) {
@@ -98,62 +119,96 @@ angular.module('myApp.controllers', [])
 
   }])
 
-   .controller('LoginCtrl', ['$scope', 'loginService', '$location', 'firebaseRef', function($scope, loginService, $location, firebaseRef) {
-      $scope.email = null;
-      $scope.pass = null;
-      $scope.confirm = null;
-      $scope.createMode = false;
+.controller('PicksCtrl', ['$scope', '$firebase', '$routeParams', '$location', function($scope, $firebase, $routeParams, $location) {
+      var index = 'facebook:' + $routeParams.id;
 
-      $scope.login = function(cb) {
-         $scope.err = null;
-         if( !$scope.email ) {
-            $scope.err = 'Please enter an email address';
-         }
-         else if( !$scope.pass ) {
-            $scope.err = 'Please enter a password';
-         }
-         else {
-            loginService.login($scope.email, $scope.pass, function(err, user) {
-               $scope.err = err? err + '' : null;
-               if( !err ) {
-                  cb && cb(user);
-               }
-            });
-         }
-      };
+      var ref = new Firebase('https://oscars.firebaseio.com/users/' + index)
+      var user = $firebase(ref)
+      var awardsRef = new Firebase('https://oscars.firebaseio.com/awards')
+      $scope.awards = $firebase(awardsRef)
 
-      $scope.createAccount = function() {
-         $scope.err = null;
-         if( assertValidLoginAttempt() ) {
-            loginService.createAccount($scope.email, $scope.pass, function(err, user) {
-               if( err ) {
-                  $scope.err = err? err + '' : null;
-               }
-               else {
-                  // must be logged in before I can write to my profile
-                  $scope.login(function() {
-                     loginService.createProfile(user.uid, user.email);
-                     firebaseRef('users/'+user.uid+'/picks').set({});
+      user.$bind($scope, "user");
 
-                     $location.path('/account');
+      $scope.goBack = function() {
+         $location.path('/')
+      }
+
+   }])
+
+   .controller('LoginCtrl', ['$scope', '$location', 'firebaseRef', '$http', function($scope, $location, firebaseRef, $http) {
+      // $scope.email = null;
+      // $scope.pass = null;
+      // $scope.confirm = null;
+      // $scope.createMode = false;
+
+      $scope.logitin = function() {
+         $scope.auth.$login('facebook').then(function(user) {
+
+            var usersRef = firebaseRef('users');
+
+            usersRef.child($scope.auth.user.uid).once('value', function(snapshot) {
+               if(snapshot.val() === null) {
+                  $http.get('http://graph.facebook.com/' + $scope.auth.user.id, {params: {fields: 'picture'}}).then(function(result) {
+                     firebaseRef('users/' + $scope.auth.user.uid).set({info: $scope.auth.user, picks: {setit: 'now'}, icon: result.data.picture.data.url})
                   });
                }
+               else {
+                  console.log('exists')
+               }
             });
-         }
-      };
-
-      function assertValidLoginAttempt() {
-         if( !$scope.email ) {
-            $scope.err = 'Please enter an email address';
-         }
-         else if( !$scope.pass ) {
-            $scope.err = 'Please enter a password';
-         }
-         else if( $scope.pass !== $scope.confirm ) {
-            $scope.err = 'Passwords do not match';
-         }
-         return !$scope.err;
+         })
       }
+
+      // $scope.login = function(cb) {
+      //    $scope.err = null;
+      //    if( !$scope.email ) {
+      //       $scope.err = 'Please enter an email address';
+      //    }
+      //    else if( !$scope.pass ) {
+      //       $scope.err = 'Please enter a password';
+      //    }
+      //    else {
+      //       loginService.login($scope.email, $scope.pass, function(err, user) {
+      //          $scope.err = err? err + '' : null;
+      //          if( !err ) {
+      //             cb && cb(user);
+      //          }
+      //       });
+      //    }
+      // };
+
+      // $scope.createAccount = function() {
+      //    $scope.err = null;
+      //    if( assertValidLoginAttempt() ) {
+      //       loginService.createAccount($scope.email, $scope.pass, function(err, user) {
+      //          if( err ) {
+      //             $scope.err = err? err + '' : null;
+      //          }
+      //          else {
+      //             // must be logged in before I can write to my profile
+      //             $scope.login(function() {
+      //                loginService.createProfile(user.uid, user.email);
+      //                firebaseRef('users/'+user.uid+'/picks').set({});
+
+      //                $location.path('/account');
+      //             });
+      //          }
+      //       });
+      //    }
+      // };
+
+      // function assertValidLoginAttempt() {
+      //    if( !$scope.email ) {
+      //       $scope.err = 'Please enter an email address';
+      //    }
+      //    else if( !$scope.pass ) {
+      //       $scope.err = 'Please enter a password';
+      //    }
+      //    else if( $scope.pass !== $scope.confirm ) {
+      //       $scope.err = 'Passwords do not match';
+      //    }
+      //    return !$scope.err;
+      // }
    }])
 
    .controller('AccountCtrl', ['$scope', 'loginService', 'syncData', '$location', function($scope, loginService, syncData, $location) {

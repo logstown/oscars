@@ -22,9 +22,10 @@
                 "team": "Thomas Newman"
             }
         ],
-        "winner": 0
+        "winner": 0,
+        "points": 1
     },
-    "ACTRESS (Actress in a Leading Role)": {
+    "BEST ACTRESS": {
         "nominees": [
             {
                 "movie": "Amy Adams",
@@ -47,7 +48,8 @@
                 "team": "August: Osage County"
             }
         ],
-        "winner": 0
+        "winner": 0,
+        "points": 3
     },
     "ORIGINAL SONG": {
         "nominees": [
@@ -72,7 +74,8 @@
                 "team": "Mandela: Long Walk to Freedom"
             }
         ],
-        "winner": 0
+        "winner": 0,
+        "points": 1
     },
     "VISUAL EFFECTS": {
         "nominees": [
@@ -97,7 +100,8 @@
                 "team": "Roger Guyett, Patrick Tubach, Ben Grossmann, Burt Dalton"
             }
         ],
-        "winner": 0
+        "winner": 0,
+        "points": 1
     },
     "SOUND MIXING": {
         "nominees": [
@@ -122,7 +126,8 @@
                 "team": "Andy Koyama, Beau Borders, David Brownlow"
             }
         ],
-        "winner": 0
+        "winner": 0,
+        "points": 1
     },
     "FILM EDITING": {
         "nominees": [
@@ -147,9 +152,10 @@
                 "team": "Joe Walker"
             }
         ],
-        "winner": 0
+        "winner": 0,
+        "points": 1
     },
-    "SUPPORTING ACTRESS (Actress in a Supporting Role)": {
+    "BEST SUPPORTING ACTRESS": {
         "nominees": [
             {
                 "movie": "Sally Hawkins",
@@ -172,7 +178,8 @@
                 "team": "Nebraska"
             }
         ],
-        "winner": 0
+        "winner": 0,
+        "points": 1
     },
     "ORIGINAL SCREENPLAY": {
         "nominees": [
@@ -197,7 +204,8 @@
                 "team": "Bob Nelson"
             }
         ],
-        "winner": 0
+        "winner": 0,
+        "points": 1
     },
     "CINEMATOGRAPHY": {
         "nominees": [
@@ -222,7 +230,8 @@
                 "team": "Roger A. Deakins"
             }
         ],
-        "winner": 0
+        "winner": 0,
+        "points": 1
     },
     "ANIMATED FEATURE FILM": {
         "nominees": [
@@ -247,9 +256,10 @@
                 "team": "Hayao Miyazaki, Toshio Suzuki"
             }
         ],
-        "winner": 0
+        "winner": 0,
+        "points": 1
     },
-    "SUPPORTING ACTOR (Actor in a Supporting Role)": {
+    "BEST SUPPORTING ACTOR": {
         "nominees": [
             {
                 "movie": "Barkhad Abdi",
@@ -272,9 +282,10 @@
                 "team": "Dallas Buyers Club"
             }
         ],
-        "winner": 0
+        "winner": 0,
+        "points": 1
     },
-    "ACTOR (Actor in a Leading Role)": {
+    "BEST ACTOR": {
         "nominees": [
             {
                 "movie": "Christian Bale",
@@ -297,9 +308,10 @@
                 "team": "Dallas Buyers Club"
             }
         ],
-        "winner": 0
+        "winner": 0,
+        "points": 3
     },
-    "PICTURE (Best Picture)": {
+    "BEST PICTURE": {
         "nominees": [
             {
                 "movie": "American Hustle",
@@ -338,7 +350,8 @@
                 "team": "Martin Scorsese, Leonardo DiCaprio, Joey McFarland, Emma Tillinger Kosoff"
             }
         ],
-        "winner": 0
+        "winner": 0,
+        "points": 5
     },
     "MAKEUP & HAIRSTYLING": {
         "nominees": [
@@ -355,7 +368,8 @@
                 "team": "Joel Harlow, Gloria Pasqua"
             }
         ],
-        "winner": 0
+        "winner": 0,
+        "points": 1
     },
     "SHORT FILM (Live Action)": {
         "nominees": [
@@ -380,7 +394,8 @@
                 "team": "Mark Gill, Baldwin Li"
             }
         ],
-        "winner": 0
+        "winner": 0,
+        "points": 1
     },
     "COSTUME DESIGN": {
         "nominees": [
@@ -405,7 +420,8 @@
                 "team": "Patricia Norris"
             }
         ],
-        "winner": 0
+        "winner": 0,
+        "points": 1
     },
     "SHORT FILM (Animated)": {
         "nominees": [
@@ -430,7 +446,8 @@
                 "team": "Max Lang, Jan Lachaeur"
             }
         ],
-        "winner": 0
+        "winner": 0,
+        "points": 1
     },
     "PRODUCTION DESIGN": {
         "nominees": [
@@ -455,7 +472,8 @@
                 "team": "Production Design: Adam Stockhausen; Set Decoration: Alice Baker"
             }
         ],
-        "winner": 0
+        "winner": 0,
+        "points": 1
     },
     "SOUND EDITING": {
         "nominees": [
@@ -480,7 +498,8 @@
                 "team": "Wylie Stateman"
             }
         ],
-        "winner": 0
+        "winner": 0,
+        "points": 1
     },
     "DIRECTING": {
         "nominees": [
@@ -505,7 +524,8 @@
                 "team": "Martin Scorsese"
             }
         ],
-        "winner": 0
+        "winner": 0,
+        "points": 3
     },
     "FOREIGN LANGUAGE FILM": {
         "nominees": [
@@ -530,7 +550,8 @@
                 "team": "Palestine"
             }
         ],
-        "winner": 0
+        "winner": 0,
+        "points": 1
     },
     "DOCUMENTARY (Feature)": {
         "nominees": [
@@ -555,7 +576,8 @@
                 "team": "Morgan Neville, Gil Friesen, Caitrin Rogers"
             }
         ],
-        "winner": 0
+        "winner": 0,
+        "points": 1
     },
     "ADAPTED SCREENPLAY": {
         "nominees": [
@@ -580,7 +602,8 @@
                 "team": "Terence Winter"
             }
         ],
-        "winner": 0
+        "winner": 0,
+        "points": 1
     },
     "DOCUMENTARY (Short Subject)": {
         "nominees": [
@@ -605,6 +628,7 @@
                 "team": "Edgar Barens"
             }
         ],
-        "winner": 0
+        "winner": 0,
+        "points": 1
     }
 }

@@ -1,24 +1,59 @@
-<div style="width: 100%; background-color: #F2EB8D;" class="text-center">
-	<h1>Jenkins Oscar Competition</h1>
-</div>
-
-<div class="text-center">
-	<h3>STARTS IN: <timer end-time="oscarStart">{{days}} days, {{hours}} hours, {{minutes}} minutes, {{seconds}} seconds.</timer></h3>
-</div>
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container-fluid">
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="background-color: #F2EB8D;">
+      <ul class="nav navbar-nav">
+      	<li><a href="#"><strong>STARTS IN:</strong> <timer end-time="oscarStart">{{days}} days, {{hours}} hours, {{minutes}} minutes, {{seconds}} seconds.</timer></a></li>
+        <!-- <li class="active"><a href="#">Link</a></li>
+        <li><a href="#">Link</a></li> -->
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><img src="{{user.icon}}" width="50" height="50" alt=""></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{auth.user.name}} <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="#" ng-click="auth.$logout()">Logout</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
 
 <div class="container">
-	<div style="display: inline-block; vertical-align: top; padding: 20px; width: 33%;" ng-repeat="(name,award) in awards" ng-class="{green: user[name] == award.winner}">
-		<h4 style="border-bottom: 1px solid black;">{{name}}</h4>
+<!-- <div ng-if="time < oscarStart" class="pull-left">
+	STARTS IN: <timer end-time="oscarStart">{{days}} days, {{hours}} hours, {{minutes}} minutes, {{seconds}} seconds.</timer>
+</div>
+<div ng-show="auth.user" class="text-right">
+    <img src="{{user.icon}}" alt=""> {{auth.user.name}} | <a href="#" ng-click="auth.$logout()">Logout</a>
+  </div> -->
+<div class="text-center">
+	<h1>Jenkins Family Oscar Competition</h1>
+	<!-- <p class="lead">Progress: <span ng-class="{green: progress() == 24, red: progress() < 24}">{{progress()}} of 24</span> completed</p> -->
+</div>
+<div class="row" style="margin-top: 20px;" ng-if="time < oscarStart">
+	<p class="lead text-center">Please make your picks below!</p>
+	<div class="col-md-6 col-md-offset-3">
+		<progressbar value="progress()" max="24" type="{{type}}">{{progress()}} of 24</progressbar>
+	</div>
+</div>
+
+
+
+	<scoreboard ng-if="time > oscarStart"></scoreboard>
+	<!-- <input ng-model="searchf" class="form-control" placeholder="filter here"> -->
+	<div style="display: inline-block; vertical-align: top; padding: 20px; width: 375px;" ng-repeat="(name,award) in awards | filter:searchf" ng-class="{green: user.picks[name] == award.winner, red: user.picks[name] !== award.winner && award.winner != 0 }">
+		<div style="border-bottom: 1px solid black;">
+			<strong>{{name}}</strong> <span class="pull-right" style="color: blue;">{{award.points}} pt<span ng-if="award.points > 1">s</span></span>
+		</div>
 
 		<div ng-repeat="nom in award.nominees" class="radio">
 			<label> 
-				<input type="radio" ng-model="user[name]" value="{{nom.movie}}" name="{{name}}" ng-disabled="now > oscarStart"> 
-				<span style="text-transform: uppercase;" ng-class="{done: user[name]===nom.movie}">{{nom.movie}}</span> - <small><em>{{nom.team}}</em></small>
+				<input type="radio" ng-model="user.picks[name]" value="{{nom.movie}}" name="{{name}}" ng-disabled="time > oscarStart"> 
+				<span ng-class="{done: user.picks[name]===nom.movie, correct: award.winner === nom.movie}"><span style="text-transform: uppercase;">{{nom.movie}}</span> - <small><em>{{nom.team}}</em></small></span>
 			</label>
 		</div>
 	</div>
-
-	<scoreboard></scoreboard>
 </div>
 
 
