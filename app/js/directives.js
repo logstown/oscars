@@ -43,9 +43,9 @@ angular.module('myApp.directives', []).
         var dur = 1000;
 
         scope.$watch('userScores', function(newval) {
-        	if(newval === undefined) {
-        		return;
-        	}
+            if(newval === undefined) {
+                return;
+            }
 
             var h = newval.length * (50+margin);
 
@@ -61,13 +61,23 @@ angular.module('myApp.directives', []).
     			.data(newval, key)
     			
     		rects.enter().append('rect')
-    			.style('fill', 'steelblue')
     			.attr('x', 60)
     			.attr('height', 50)
 
 
     		rects.transition()
     			.duration(dur)
+                .style('fill', function(d) {
+                    if(scope.winner && d.score === max) {
+                        return 'steelblue'
+                    }
+                    else if(d.lastCorrect) {
+                        return '#B4F59A'
+                    }
+                    else {
+                        return 'pink';
+                    }
+                })
     			.attr('width', function(d) {
 					return xScale(d.score)
 				})
@@ -158,10 +168,7 @@ angular.module('myApp.directives', []).
                 .data(newval, key)
 
             names.enter().append('text')
-                .attr('x', 60)
-                .text(function(d) {
-                    return d.info.name;
-                });
+                .attr('x', 60);
 
             names.transition()
                 .delay(dur)
@@ -171,6 +178,12 @@ angular.module('myApp.directives', []).
                 .attr('y', function(d, i) {
                     return (i * (50 + margin)) + 12
                 })
+                .text(function(d) {
+                    if(scope.winner && d.score === max) {
+                        return d.info.name + ' - WINNER!'
+                    }
+                    return d.info.name;
+                });
         })
       }
     };

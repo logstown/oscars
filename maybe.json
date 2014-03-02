@@ -25,7 +25,7 @@
         "winner": 0,
         "points": 1
     },
-    "BEST ACTRESS": {
+    "ACTRESS": {
         "nominees": [
             {
                 "movie": "Amy Adams",
@@ -155,7 +155,7 @@
         "winner": 0,
         "points": 1
     },
-    "BEST SUPPORTING ACTRESS": {
+    "SUPPORTING ACTRESS": {
         "nominees": [
             {
                 "movie": "Sally Hawkins",
@@ -259,7 +259,7 @@
         "winner": 0,
         "points": 1
     },
-    "BEST SUPPORTING ACTOR": {
+    "SUPPORTING ACTOR": {
         "nominees": [
             {
                 "movie": "Barkhad Abdi",
@@ -285,7 +285,7 @@
         "winner": 0,
         "points": 1
     },
-    "BEST ACTOR": {
+    "ACTOR": {
         "nominees": [
             {
                 "movie": "Christian Bale",
@@ -501,7 +501,7 @@
         "winner": 0,
         "points": 1
     },
-    "DIRECTING": {
+    "DIRECTOR": {
         "nominees": [
             {
                 "movie": "12 Years a Slave",

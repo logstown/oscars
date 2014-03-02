@@ -27,7 +27,7 @@
 <div ng-show="auth.user" class="text-right">
     <img src="{{user.icon}}" alt=""> {{auth.user.name}} | <a href="#" ng-click="auth.$logout()">Logout</a>
   </div> -->
-<div class="text-center">
+<div ng-if="time < oscarStart" class="text-center">
 	<h1>Jenkins Family Oscar Competition</h1>
 	<!-- <p class="lead">Progress: <span ng-class="{green: progress() == 24, red: progress() < 24}">{{progress()}} of 24</span> completed</p> -->
 </div>
@@ -39,7 +39,16 @@
 </div>
 
 
-
+	<div ng-if="time > oscarStart" class="text-center" style="margin-bottom: 40px;">
+		<h1>Leader Board</h1>
+		<p class="lead">(updates automatically)</p>
+		<span >Last pick was <em>correct</em>:</span>
+		<div style="display: inline-block; vertical-align: middle; height: 15px; width: 15px; background-color: #B4F59A"></div>
+		<span style="margin-left: 30px;" >Last pick was <em>incorrect</em>:</span>
+		<div style="display: inline-block; vertical-align: middle; height: 15px; width: 15px; background-color: pink"></div>
+		<span style="margin-left: 30px;"><strong>Winner: </strong></span>
+		<div style="display: inline-block; vertical-align: middle; height: 15px; width: 15px; background-color: steelblue;"></div>
+	</div>
 	<scoreboard ng-if="time > oscarStart"></scoreboard>
 	<!-- <input ng-model="searchf" class="form-control" placeholder="filter here"> -->
 	<div style="display: inline-block; vertical-align: top; padding: 20px; width: 375px;" ng-repeat="(name,award) in awards | filter:searchf" ng-class="{green: user.picks[name] == award.winner, red: user.picks[name] !== award.winner && award.winner != 0 }">

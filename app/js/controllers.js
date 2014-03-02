@@ -57,6 +57,10 @@ angular.module('myApp.controllers', [])
       $scope.usersd = $firebase(userRef);
       $scope.awards = $firebase(awardsRef)
 
+      var last = new Firebase('https://oscars.firebaseio.com/last')
+      $scope.last = $firebase(last)
+
+
       // $scope.$watch('user', function() {
       //    console.log('here')
       //    $scope.$apply(function() {
@@ -75,31 +79,46 @@ angular.module('myApp.controllers', [])
 
       $scope.initialized = false;
 
-      function getUserScores() {
+      function getUserScores(awardKey) {
          var awardsKeys = $scope.awards.$getIndex(); 
          var userKeys = $scope.usersd.$getIndex();
-
+         $scope.winner = true;
          var userScores = []
 
-         angular.forEach(userKeys, function(key) {
-            var user = $scope.usersd[key]
-
-            var score = 0;
-
-            angular.forEach(awardsKeys, function(key) {
-               var award = $scope.awards[key];
-               if(award.winner === user.picks[key])
-                  score += award.points;
-            });
-
-            userScores.push({info: user.info, pic: user.icon, score: score})
+         angular.forEach(awardsKeys, function(key) {
+            if($scope.awards[key].winner === 0) {
+               $scope.winner = false;
+            }
          })
 
-         userScores.sort(function(a,b) {
-            return d3.descending(a.score, b.score)
-         })
+         last.on('value', function(snapshot) {
 
-         $scope.userScores = userScores
+            var lastAward = snapshot.val().last;
+
+            angular.forEach(userKeys, function(key) {
+               var user = $scope.usersd[key]
+               var lastCorrect = false;
+               var score = 0;
+
+               angular.forEach(awardsKeys, function(key) {
+                  var award = $scope.awards[key];
+                  if(award.winner === user.picks[key])
+                     score += award.points;
+               });
+
+               if(lastAward !== 0 && user.picks[lastAward] === $scope.awards[lastAward].winner) {
+                  lastCorrect = true;
+               }
+
+               userScores.push({info: user.info, pic: user.icon, score: score, lastCorrect: lastCorrect})
+            })
+
+            userScores.sort(function(a,b) {
+               return d3.descending(a.score, b.score)
+            })
+
+            $scope.userScores = userScores
+         })
 
       }
 
@@ -108,8 +127,9 @@ angular.module('myApp.controllers', [])
          $scope.awards.$on("loaded", function() {
             getUserScores();
 
-            $scope.awards.$on("change", function() {
-               getUserScores();
+            $scope.awards.$on("change", function(awardKey) {
+               last.set({last: awardKey})
+               getUserScores(awardKey);
             })
          })
       });
