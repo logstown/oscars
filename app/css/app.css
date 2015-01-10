@@ -1,8 +1,13 @@
+body { padding-top: 70px; }
 
+.navbar {
+	-webkit-box-shadow: 0 8px 6px -6px #999;
+       -moz-box-shadow: 0 8px 6px -6px #999;
+            box-shadow: 0 8px 6px -6px #999;
+}
 
-.done {
-  /*color: blue;*/
-  font-weight: bold;
+.chosen {
+  font-weight: bold !important;
 }
 
 .green {
@@ -22,4 +27,22 @@
 
 html, body {
   background-color: #E6E5DC;
+}
+
+.test div {
+	background-color: grey;
+}
+
+.award {
+	padding-bottom: 30px;
+}
+
+.wrong {
+	text-decoration: line-through;
+	color: red;
+}
+
+.progress {
+	margin-bottom: 0;
+	width: 350px;
 }

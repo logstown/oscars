@@ -56,6 +56,7 @@ angular.module('myApp.controllers', [])
       var awardsRef = new Firebase('https://oscars.firebaseio.com/awards')
       $scope.usersd = $firebase(userRef);
       $scope.awards = $firebase(awardsRef)
+      console.log($scope.awards)
 
       var last = new Firebase('https://oscars.firebaseio.com/last')
       $scope.last = $firebase(last)
@@ -69,7 +70,7 @@ angular.module('myApp.controllers', [])
       // })
 
       $scope.time = new Date();
-      $scope.oscarStart = new Date(2014, 2, 2, 19)
+      $scope.oscarStart = new Date(2015, 2, 22, 19)
     
       $scope.$watch('time', function(){
         $timeout(function(){
@@ -134,7 +135,22 @@ angular.module('myApp.controllers', [])
          })
       });
 
+      $scope.nomClass = function(name, award, nom) {
+         var classArr = [];
 
+         if($scope.user.picks[name]===nom.movie) {
+            classArr.push('chosen')
+            // if(award.winner !== nom.movie) {
+            //    classArr.push('wrong')
+            // }
+         }
+
+         // if(award.winner === nom.movie) {
+         //    classArr.push('correct')
+         // }
+
+         return classArr;
+      }
 
 
   }])
@@ -166,6 +182,10 @@ angular.module('myApp.controllers', [])
 
             var usersRef = firebaseRef('users');
 
+            console.log(user)
+
+            firebaseRef('users/' + user.uid + '/icon').set(user.picture.data.url)
+
             usersRef.child($scope.auth.user.uid).once('value', function(snapshot) {
                if(snapshot.val() === null) {
                   $http.get('http://graph.facebook.com/' + $scope.auth.user.id, {params: {fields: 'picture'}}).then(function(result) {
@@ -173,6 +193,7 @@ angular.module('myApp.controllers', [])
                   });
                }
                else {
+                  console.log($scope.auth.user)
                   console.log('exists')
                }
             });
