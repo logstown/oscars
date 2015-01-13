@@ -3,125 +3,109 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
-      	<li><a href="#">Picks:</a></li>
-		<li><a href="#"><progressbar value="progress()" max="24" type="{{type}}">{{progress()}} of 24</progressbar></a></li>
-        <!-- <li class="active"><a href="#">Link</a></li>
-        <li><a href="#">Link</a></li> -->
+        <li><a href="#">Picks:</a>
+        </li>
+        <li>
+          <a href="#">
+            <progressbar value="progress()" max="24" type="{{type}}">{{progress()}} of 24</progressbar>
+          </a>
+        </li>
       </ul>
-      
+
       <ul class="nav navbar-nav navbar-right">
-        <li><img src="{{user.icon}}" width="50" height="50" alt=""></li>
+        <li><img src="{{user.icon}}" width="50" height="50" alt="">
+        </li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{auth.user.name}} <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="#" ng-click="auth.$logout()">Logout</a></li>
+            <li><a href="#" ng-click="auth.$logout()">Logout</a>
+            </li>
           </ul>
         </li>
       </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.navbar-collapse -->
+  </div>
+  <!-- /.container-fluid -->
 </nav>
 
 <div class="container">
-<!-- <div ng-if="time < oscarStart" class="pull-left">
-	STARTS IN: <timer end-time="oscarStart">{{days}} days, {{hours}} hours, {{minutes}} minutes, {{seconds}} seconds.</timer>
-</div>
-<div ng-show="auth.user" class="text-right">
-    <img src="{{user.icon}}" alt=""> {{auth.user.name}} | <a href="#" ng-click="auth.$logout()">Logout</a>
-  </div> -->
-<div ng-if="time < oscarStart" class="text-center">
-	<h1>Jenkins Family Oscar Competition</h1>
-	<!-- <p class="lead">Progress: <span ng-class="{green: progress() == 24, red: progress() < 24}">{{progress()}} of 24</span> completed</p> -->
-</div>
-<div class="row" style="margin-top: 20px;" ng-if="time < oscarStart">
-	<p class="lead text-center">
-     <strong>STARTS IN:</strong> <timer end-time="oscarStart">{{days}} day<span ng-hide="days===1">s</span>, {{hours}} hour<span ng-hide="hours===1">s</span>, {{minutes}} minute<span ng-hide="minutes===1">s</span>, {{seconds}} second<span ng-hide="seconds===1">s</span>.</timer>
-	</p>
-</div>
+  <div ng-if="time < oscarStart" class="text-center">
+    <h1>Jenkins Family Oscar Competition</h1>
+    <!-- <p class="lead">Progress: <span ng-class="{green: progress() == 24, red: progress() < 24}">{{progress()}} of 24</span> completed</p> -->
+  </div>
+  <div class="row" style="margin-top: 20px;" ng-if="time < oscarStart">
+    <p class="lead text-center">
+      <strong>STARTS IN:</strong>
+      <timer end-time="oscarStart">{{days}} day<span ng-hide="days===1">s</span>, {{hours}} hour<span ng-hide="hours===1">s</span>, {{minutes}} minute<span ng-hide="minutes===1">s</span>, {{seconds}} second<span ng-hide="seconds===1">s</span>.</timer>
+    </p>
+  </div>
 
 
-	<div ng-if="time > oscarStart" class="text-center" style="margin-bottom: 40px;">
-		<h1>Leader Board</h1>
-		<p class="lead">(updates automatically)</p>
-		<span >Last pick was <em>correct</em>:</span>
-		<div style="display: inline-block; vertical-align: middle; height: 15px; width: 15px; background-color: #B4F59A"></div>
-		<span style="margin-left: 30px;" >Last pick was <em>incorrect</em>:</span>
-		<div style="display: inline-block; vertical-align: middle; height: 15px; width: 15px; background-color: pink"></div>
-		<span style="margin-left: 30px;"><strong>Winner: </strong></span>
-		<div style="display: inline-block; vertical-align: middle; height: 15px; width: 15px; background-color: steelblue;"></div>
-	</div>
-	<scoreboard ng-if="time > oscarStart"></scoreboard>
-	<!-- <input ng-model="searchf" class="form-control" placeholder="filter here"> -->
-	<!-- <div style="display: inline-block; vertical-align: top; padding: 20px; width: 375px;" ng-repeat="(name,award) in awards | filter:searchf" ng-class="{green: user.picks[name] == award.winner, red: user.picks[name] !== award.winner && award.winner != 0 }">
-		<div style="border-bottom: 1px solid black;">
-			<strong>{{name}}</strong> <span class="pull-right" style="color: blue;">{{award.points}} pt<span ng-if="award.points > 1">s</span></span>
-		</div>
-
-		<div ng-repeat="nom in award.nominees" class="radio">
-			<label> 
-				<input type="radio" ng-model="user.picks[name]" value="{{nom.movie}}" name="{{name}}" ng-disabled="time > oscarStart"> 
-				<span ng-class="{done: user.picks[name]===nom.movie, correct: award.winner === nom.movie}"><span style="text-transform: uppercase;">{{nom.movie}}</span> - <small><em>{{nom.team}}</em></small></span>
-			</label>
-		</div>
-	</div> -->
-
-	<div class="row">
-		<div class="col-md-6">
-			<div ng-repeat="(name,award) in awards | filter:searchf" ng-if="$index<12" class="panel panel-primary">
-				<div class="panel-heading">
-					<h2 class="panel-title pull-left">
+  <div ng-if="time > oscarStart" class="text-center" style="margin-bottom: 40px;">
+    <h1>Leader Board</h1>
+    <p class="lead">(updates automatically)</p>
+    <span>Last pick was <em>correct</em>:</span>
+    <div style="display: inline-block; vertical-align: middle; height: 15px; width: 15px; background-color: #B4F59A"></div>
+    <span style="margin-left: 30px;">Last pick was <em>incorrect</em>:</span>
+    <div style="display: inline-block; vertical-align: middle; height: 15px; width: 15px; background-color: pink"></div>
+    <span style="margin-left: 30px;"><strong>Winner: </strong></span>
+    <div style="display: inline-block; vertical-align: middle; height: 15px; width: 15px; background-color: steelblue;"></div>
+  </div>
+  <scoreboard ng-if="time > oscarStart"></scoreboard>
+  <div ng-repeat="n in [] | range:3">hi</div>
+  <!-- <input ng-model="searchf" class="form-control" placeholder="filter here"> -->
+  <div class="row">
+    <div class="col-md-6 col-xs-12" ng-repeat="n in [] | range:2">
+      {{$index}}
+      <div ng-repeat="(name,award) in awards | filter:searchf" ng-if="$index<12" class="panel panel-primary">
+        <div class="panel-heading">
+          <h2 class="panel-title pull-left">
 						<i class="fa fa-fw fa-{{award.icon}}" ng-class="getIcon(name)"></i> {{name}}
 					</h2>
-					<div class="pull-right">
-						{{award.points}} pt<span ng-if="award.points > 1">s</span>
-					</div>
-					<div class="clearfix"></div>
-				</div>
+          <div class="pull-right">
+            {{award.points}} pt<span ng-if="award.points > 1">s</span>
+          </div>
+          <div class="clearfix"></div>
+        </div>
 
-				<ul class="list-group">
-					<li class="list-group-item" ng-repeat="nom in award.nominees">
-						<div class="radio">
-							<label> 
-								<input type="radio" ng-model="user.picks[name]" value="{{nom.movie}}" name="{{name}}" ng-disabled="time > oscarStart" style="margin-top: 8px"> 
-								<span ng-class="nomClass(name, award, nom)"><span class="lead">{{nom.movie}}</span> - <em>{{nom.team}}</em></span>
-							</label>
-						</div>
-					</li>
-				</ul>
-	
-				<!-- <div ng-repeat="nom in award.nominees" class="radio">
-					<label> 
-						<input type="radio" ng-model="user.picks[name]" value="{{nom.movie}}" name="{{name}}" ng-disabled="time > oscarStart"> 
-						<span ng-class="nomClass(name, award, nom)"><span style="text-transform: uppercase;">{{nom.movie}}</span> - <small><em>{{nom.team}}</em></small></span>
-					</label>
-				</div> -->
-			</div>
-		</div>
-		<div class="col-md-6">
-			<div ng-repeat="(name,award) in awards | filter:searchf" ng-if="$index>11" class="panel panel-primary">
-				<div class="panel-heading">
-					<h2 class="panel-title pull-left">
+        <ul class="list-group">
+          <li class="list-group-item" ng-repeat="nom in award.nominees">
+            <div class="radio">
+              <label>
+                <input type="radio" ng-model="user.picks[name]" value="{{nom.movie}}" name="{{name}}" ng-disabled="time > oscarStart" style="margin-top: 8px">
+                <span ng-class="nomClass(name, award, nom)"><span class="lead">{{nom.movie}}</span> - <em>{{nom.team}}</em>
+                </span>
+              </label>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-md-6 col-xs-12">
+      <div ng-repeat="(name,award) in awards | filter:searchf" ng-if="$index>11" class="panel panel-primary">
+        <div class="panel-heading">
+          <h2 class="panel-title pull-left">
 						<i class="fa fa-fw fa-{{award.icon}}" ng-class="getIcon(name)"></i> {{name}}
 					</h2>
-					<div class="pull-right">
-						{{award.points}} pt<span ng-if="award.points > 1">s</span>
-					</div>
-					<div class="clearfix"></div>
-				</div>
+          <div class="pull-right">
+            {{award.points}} pt<span ng-if="award.points > 1">s</span>
+          </div>
+          <div class="clearfix"></div>
+        </div>
 
-				<ul class="list-group">
-					<li class="list-group-item" ng-repeat="nom in award.nominees">
-						<div class="radio">
-							<label> 
-								<input type="radio" ng-model="user.picks[name]" value="{{nom.movie}}" name="{{name}}" ng-disabled="time > oscarStart" style="margin-top: 8px"> 
-								<span ng-class="nomClass(name, award, nom)"><span class="lead">{{nom.movie}}</span> - <em>{{nom.team}}</em></span>
-							</label>
-						</div>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</div>
+        <ul class="list-group">
+          <li class="list-group-item" ng-repeat="nom in award.nominees">
+            <div class="radio">
+              <label>
+                <input type="radio" ng-model="user.picks[name]" value="{{nom.movie}}" name="{{name}}" ng-disabled="time > oscarStart" style="margin-top: 8px">
+                <span ng-class="nomClass(name, award, nom)"><span class="lead">{{nom.movie}}</span> - <em>{{nom.team}}</em>
+                </span>
+              </label>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </div>
-
-
