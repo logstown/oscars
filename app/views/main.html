@@ -1,23 +1,75 @@
-<div class="jumbotron">
-  <h1>'Allo, 'Allo!</h1>
-  <p class="lead">
-    <img src="images/yeoman.png" alt="I'm Yeoman"><br>
-    Always a pleasure scaffolding your apps.
-  </p>
-  <p><a class="btn btn-lg btn-success" ng-href="#">Splendid!<span class="glyphicon glyphicon-ok"></span></a></p>
+<!-- <p>Hello, {{ user.facebook.displayName }}</p>
+<button ng-click="auth.$unauth()">Logout</button> -->
+
+<div class="header">
+  <ul class="nav nav-pills">
+    <li class="dropdown pull-right" dropdown on-toggle="toggled(open)">
+      <a href class="dropdown-toggle" dropdown-toggle>
+        {{user.facebook.displayName}} <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu">
+        <li>
+          <a href ng-click="auth.$unauth()">logout</a>
+        </li>
+      </ul>
+    </li>
+    <h3 class="text-muted" ng-click="getInfo()">Oscar Competition</h3>
+  </ul>
 </div>
 
-<div class="row marketing">
-  <h4>HTML5 Boilerplate</h4>
-  <p>
-    HTML5 Boilerplate is a professional front-end template for building fast, robust, and adaptable web apps or sites.
-  </p>
+<div class="row">
+  <div class="col-xs-12">
+    {{$index}}
+    <div ng-repeat="award in awards" class="panel panel-primary">
+      <div class="panel-heading">
+        <h2 class="panel-title pull-left">
+            <i class="fa fa-star"></i> {{award.award}}
+          </h2>
+        <div class="pull-right">
+          1 pt
+          <!-- <span ng-if="award.points > 1">s</span> -->
+        </div>
+        <div class="clearfix"></div>
+      </div>
 
-  <h4>Angular</h4>
-  <p>
-    AngularJS is a toolset for building the framework most suited to your application development.
-  </p>
+      <ul class="list-group">
+        <li class="list-group-item" ng-repeat="nom in award.nominees">
+          <div class="radio">
+            <label>
+              <input type="radio" ng-model="picks[$parent.$index]" ng-value="$index" ng-disabled="time > oscarStart" style="margin-top: 8px">
+              <span ng-show="nom.nominee"><span class="lead">{{nom.nominee}}</span> - <em>{{nom.film}}</em>
+              </span>
+              <span ng-hide="nom.nominee"><span class="lead">{{nom.film}}</span>
+              </span>
+            </label>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- <div class="col-md-6 col-xs-12">
+      <div ng-repeat="(name,award) in awards | filter:searchf" ng-if="$index>11" class="panel panel-primary">
+        <div class="panel-heading">
+          <h2 class="panel-title pull-left">
+            <i class="fa fa-star"></i> {{name}}
+          </h2>
+          <div class="pull-right">
+            {{award.points}} pt<span ng-if="award.points > 1">s</span>
+          </div>
+          <div class="clearfix"></div>
+        </div>
 
-  <h4>Karma</h4>
-  <p>Spectacular Test Runner for JavaScript.</p>
+        <ul class="list-group">
+          <li class="list-group-item" ng-repeat="nom in award.nominees">
+            <div class="radio">
+              <label>
+                <input type="radio" ng-model="user.picks[name]" value="{{nom.movie}}" name="{{name}}" ng-disabled="time > oscarStart" style="margin-top: 8px">
+                <span ng-class="nomClass(name, award, nom)"><span class="lead">{{nom.movie}}</span> - <em>{{nom.team}}</em>
+                </span>
+              </label>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div> -->
 </div>
