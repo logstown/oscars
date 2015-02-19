@@ -35,7 +35,7 @@ module.exports = function(grunt) {
             },
             js: {
                 files: ['<%= yeoman.app %>/scripts/{,*/}*.js'],
-                tasks: ['newer:jshint:all'],
+                // tasks: ['newer:jshint:all'],
                 options: {
                     livereload: '<%= connect.options.livereload %>'
                 }
@@ -163,7 +163,7 @@ module.exports = function(grunt) {
         // Automatically inject Bower components into the app
         wiredep: {
             app: {
-                exclude: ['bower_components/bootstrap-sass-official/assets/javascripts'],
+                exclude: ['bower_components/bootstrap-sass-official/assets/javascripts', 'bower_components/bootstrap/dist/css/bootstrap.css'],
                 src: ['<%= yeoman.app %>/index.html'],
                 ignorePath: /\.\.\//
             },
@@ -354,6 +354,11 @@ module.exports = function(grunt) {
                     cwd: '.',
                     src: 'bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*',
                     dest: '<%= yeoman.dist %>'
+                }, {
+                    expand: true,
+                    cwd: 'bower_components/font-awesome/fonts',
+                    dest: '<%= yeoman.dist %>/fonts',
+                    src: '*'
                 }]
             },
             styles: {
@@ -435,8 +440,8 @@ module.exports = function(grunt) {
     ]);
 
     grunt.registerTask('default', [
-        'newer:jshint',
-        'test',
+        // 'newer:jshint',
+        // 'test',
         'build'
     ]);
 };

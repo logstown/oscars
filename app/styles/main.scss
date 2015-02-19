@@ -1,9 +1,27 @@
 $icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
+$nav-pills-active-link-hover-bg: #af9751;
+$link-color: black;
 // bower:scss
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 // endbower
+@import url(https://fonts.googleapis.com/css?family=Oswald:400,300);
 /* Everything but the jumbotron gets side spacing for mobile first views */
 
+body, html {
+  // background-color: black;
+  // color: white;
+}
+.panel, .navbar, h2 {
+  font-family: 'Oswald', sans-serif;
+}
+.navbar-brand {
+  font-size: 29px;
+  i {
+    color: #af9751;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
 .header {
   border-bottom: 1px solid #e5e5e5;
   h3 {

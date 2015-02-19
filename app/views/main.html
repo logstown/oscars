@@ -1,32 +1,80 @@
-<!-- <p>Hello, {{ user.facebook.displayName }}</p>
-<button ng-click="auth.$unauth()">Logout</button> -->
-
-<div class="header">
-  <ul class="nav nav-pills">
-    <li class="dropdown pull-right" dropdown on-toggle="toggled(open)">
-      <a href class="dropdown-toggle" dropdown-toggle>
-        {{user.facebook.displayName}} <span class="caret"></span>
+<nav class="navbar navbar-inverse" style="background-color: black;">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <img src="images/statue.jpg" class="img-responsive pull-left" style="height: 50px; display: inline-block;"></img>
+      <a class="navbar-brand" href style="margin-left: -5px">Jenkins Family Oscar Competition
       </a>
-      <ul class="dropdown-menu">
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <img ng-src="https://graph.facebook.com/{{user.id}}/picture" height="50px;" style="margin-right: 10px;" alt="">
+        </li>
+        <li class="dropdown pull-right" dropdown on-toggle="toggled(open)">
+          <a href data-animation="am-flip-x" bs-dropdown="dropdown">
+            {{user.name}} <span class="caret"></span>
+          </a>
+          <!-- <ul class="dropdown-menu">
         <li>
           <a href ng-click="auth.$unauth()">logout</a>
         </li>
+      </ul> -->
+        </li>
       </ul>
-    </li>
-    <h3 class="text-muted" ng-click="getInfo()">Oscar Competition</h3>
-  </ul>
+    </div>
+    <!-- /.navbar-collapse -->
+  </div>
+  <!-- /.container-fluid -->
+</nav>
+
+
+<div ng-show="time < oscarStart" class="jumbotron">
+  <h2 class="text-center">
+    <i class="fa fa-clock-o"></i> Starts in
+    <timer end-time="oscarStart"><span ng-show="days > 0">{{days}} day<span ng-hide="days===1">s</span></span><span ng-show="hours > 0">, {{hours}} hour<span ng-hide="hours===1">s</span></span><span ng-show="minutes > 0">, {{minutes}} minute<span ng-hide="minutes===1">s</span></span><span ng-show="seconds > 0">, {{seconds}} second<span ng-hide="seconds===1">s</span></span>.</timer>
+  </h2>
+</div>
+
+<div ng-if="time > oscarStart">
+  <div class="text-center" style="margin-bottom: 40px;">
+    <h1>Score Board <small>(updates automatically)</small></h1>
+    <span>Last pick was <em>correct</em>:</span>
+    <div style="display: inline-block; vertical-align: middle; height: 15px; width: 15px; background-color: #B4F59A"></div>
+    <span style="margin-left: 30px;">Last pick was <em>incorrect</em>:</span>
+    <div style="display: inline-block; vertical-align: middle; height: 15px; width: 15px; background-color: pink"></div>
+  </div>
+  <scoreboard></scoreboard>
 </div>
 
 <div class="row">
-  <div class="col-xs-12">
-    {{$index}}
-    <div ng-repeat="award in awards" class="panel panel-primary">
-      <div class="panel-heading">
-        <h2 class="panel-title pull-left">
+  <div class="col-md-3 hidden-sm hidden-xs">
+    <div class="affix hidden-print" bs-affix data-offset-top="-15">
+      <ul class="nav nav-stacked nav-pills award-list">
+        <li ng-repeat="award in awards" data-target="#award-{{$index}}" bs-scrollspy>
+          <a href="#award-{{$index}}" du-smooth-scroll style="padding: 3px 15px;">
+            {{award.award}} <i ng-show="user.picks[$index]"class="fa fa-check fa-fw text-success"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="col-md-9">
+    <div id="award-{{$index}}" ng-repeat="award in awards" class="panel panel-default">
+      <div class="panel-heading" style="background-color: #af9751; color: black">
+        <h1 class="panel-title pull-left" style="text-shadow: 2px 2px 2px lightgrey; font-size: 20px;">
             <i class="fa fa-star"></i> {{award.award}}
-          </h2>
+          </h1>
         <div class="pull-right">
-          1 pt
+          <span class="badge alert-success">{{award.points}} pt<span ng-show="award.points > 1">s</span> </span>
           <!-- <span ng-if="award.points > 1">s</span> -->
         </div>
         <div class="clearfix"></div>
@@ -34,15 +82,21 @@
 
       <ul class="list-group">
         <li class="list-group-item" ng-repeat="nom in award.nominees">
-          <div class="radio">
+          <div class="radio pull-left" style="margin: 0;">
             <label>
-              <input type="radio" ng-model="picks[$parent.$index]" ng-value="$index" ng-disabled="time > oscarStart" style="margin-top: 8px">
-              <span ng-show="nom.nominee"><span class="lead">{{nom.nominee}}</span> - <em>{{nom.film}}</em>
+              <input type="radio" ng-model="user.picks[$parent.$index]" value="{{$index}}" name="{{$parent.$index}}" ng-disabled="time > oscarStart" style="margin-top: 8px">
+              <span ng-show="nom.nominee">
+                <span class="lead">{{nom.nominee}}</span> - <span style="text-decoration: underline;">{{nom.film}}</span>
               </span>
-              <span ng-hide="nom.nominee"><span class="lead">{{nom.film}}</span>
+              <span ng-hide="nom.nominee">
+                <span class="lead">{{nom.film}}</span>
               </span>
             </label>
           </div>
+          <div class="pull-right">
+            <img ng-repeat="voter in nom.users" ng-src="https://graph.facebook.com/{{users[voter].id}}/picture" alt="" height="30" data-type="success" data-title="{{users[voter].first_name}}" bs-tooltip>
+          </div>
+          <div class="clearfix"></div>
         </li>
       </ul>
     </div>

@@ -17,8 +17,11 @@ angular
         'ngRoute',
         'ngSanitize',
         'ngTouch',
-        'ui.bootstrap',
-        'firebase'
+        'firebase',
+        'mgcrea.ngStrap',
+        'mgcrea.ngStrap.helpers.dimensions',
+        'duScroll',
+        'timer'
     ])
     .config(function($routeProvider) {
         $routeProvider
@@ -55,12 +58,24 @@ angular
                 redirectTo: '/'
             });
     })
-    .run(function($rootScope, $location) {
+    .run(function($rootScope, $location, Auth) {
+        $rootScope.url = 'https://oscars.firebaseio.com/'
         $rootScope.$on("$routeChangeError", function(event, next, previous, error) {
             // We can catch the error thrown when the $requireAuth promise is rejected
             // and redirect the user back to the home page
             if (error === "AUTH_REQUIRED") {
                 $location.path("/login");
+            }
+        });
+
+        $rootScope.auth = Auth;
+        $rootScope.auth.$onAuth(function(authData) {
+            if (authData) {
+                console.log("Logged in as:", authData.uid);
+                $location.path('/')
+            } else {
+                console.log("Logged out");
+                $location.path('/login')
             }
         });
     });

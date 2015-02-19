@@ -10,14 +10,18 @@
   <!-- build:css(.) styles/vendor.css -->
   <!-- bower:css -->
   <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
+  <link rel="stylesheet" href="bower_components/angular-motion/dist/angular-motion.css" />
   <!-- endbower -->
+  <!-- <link rel="stylesheet" href="//mgcrea.github.io/angular-strap/styles/bootstrap-additions.min.css">
+  <link rel="stylesheet" href="//mgcrea.github.io/angular-strap/styles/libraries.min.css">
+  <link rel="stylesheet" href="//mgcrea.github.io/angular-strap/styles/main.min.css"> -->
   <!-- endbuild -->
   <!-- build:css(.tmp) styles/main.css -->
   <link rel="stylesheet" href="styles/main.css">
   <!-- endbuild -->
 </head>
 
-<body ng-app="oscarsApp">
+<body ng-app="oscarsApp" style="position: relative;">
   <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -68,11 +72,15 @@
   <script src="bower_components/angular-route/angular-route.js"></script>
   <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
   <script src="bower_components/angular-touch/angular-touch.js"></script>
-  <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
   <script src="bower_components/d3/d3.js"></script>
   <script src="bower_components/angular-timer/dist/angular-timer.js"></script>
   <script src="bower_components/firebase/firebase.js"></script>
   <script src="bower_components/angularfire/dist/angularfire.js"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+  <script src="bower_components/angular-strap/dist/angular-strap.js"></script>
+  <script src="bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
+  <script src="bower_components/angular-scroll/angular-scroll.js"></script>
+  <script src="bower_components/lodash/lodash.js"></script>
   <!-- endbower -->
   <!-- endbuild -->
 
@@ -82,6 +90,8 @@
   <script src="scripts/controllers/about.js"></script>
   <script src="scripts/services/auth.js"></script>
   <script src="scripts/controllers/login.js"></script>
+  <script src="scripts/services/user.js"></script>
+  <script src="scripts/directives/scoreboard.js"></script>
   <!-- endbuild -->
 </body>
 
