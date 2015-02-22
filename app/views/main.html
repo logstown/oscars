@@ -40,11 +40,12 @@
 <div ng-show="time < oscarStart" class="jumbotron">
   <h2 class="text-center">
     <i class="fa fa-clock-o"></i> Starts in
-    <timer end-time="oscarStart"><span ng-show="days > 0">{{days}} day<span ng-hide="days===1">s</span></span><span ng-show="hours > 0">, {{hours}} hour<span ng-hide="hours===1">s</span></span><span ng-show="minutes > 0">, {{minutes}} minute<span ng-hide="minutes===1">s</span></span><span ng-show="seconds > 0">, {{seconds}} second<span ng-hide="seconds===1">s</span></span>.</timer>
+    <timer end-time="oscarStart"><span ng-show="days > 0">{{days}} day<span ng-hide="days===1">s</span></span><span ng-show="hours > 0"><span ng-show="days > 0">,</span> {{hours}} hour<span ng-hide="hours===1">s</span></span><span ng-show="minutes > 0"><span ng-show="hours > 0">,</span> {{minutes}} minute<span ng-hide="minutes===1">s</span></span><span ng-show="seconds > 0"><span ng-show="minutes > 0">,</span> {{seconds}} second<span ng-hide="seconds===1">s</span></span>.</timer>
   </h2>
 </div>
 
-<div ng-if="time > oscarStart">
+<div ng-if="time > oscarStart && user" style="margin-bottom: 50px;">
+  <button ng-show="winner" class="btn btn-info pull-right" ng-click="getSuperlatives()">Superlatives!</button>
   <div class="text-center" style="margin-bottom: 40px;">
     <h1>Score Board <small>(updates automatically)</small></h1>
     <span>Last pick was <em>correct</em>:</span>
@@ -55,13 +56,13 @@
   <scoreboard></scoreboard>
 </div>
 
-<div class="row">
+<div ng-if="user" class="row">
   <div class="col-md-3 hidden-sm hidden-xs">
     <div class="affix hidden-print" bs-affix data-offset-top="-15">
       <ul class="nav nav-stacked nav-pills award-list">
-        <li ng-repeat="award in awards" data-target="#award-{{$index}}" bs-scrollspy>
+        <li ng-repeat="award in awards" ng-class="highlight($index)" style="margin-top: 1px;" data-target="#award-{{$index}}" bs-scrollspy>
           <a href="#award-{{$index}}" du-smooth-scroll style="padding: 3px 15px;">
-            {{award.award}} <i ng-show="user.picks[$index]"class="fa fa-check fa-fw text-success"></i>
+            {{award.award}} <i ng-if="time < oscarStart" ng-show="user.picks[$index]"class="fa fa-check fa-fw text-success"></i>
           </a>
         </li>
       </ul>
@@ -75,13 +76,12 @@
           </h1>
         <div class="pull-right">
           <span class="badge alert-success">{{award.points}} pt<span ng-show="award.points > 1">s</span> </span>
-          <!-- <span ng-if="award.points > 1">s</span> -->
         </div>
         <div class="clearfix"></div>
       </div>
 
       <ul class="list-group">
-        <li class="list-group-item" ng-repeat="nom in award.nominees">
+        <li class="list-group-item" ng-repeat="nom in award.nominees" ng-class="highlightNom($parent.$index, $index)">
           <div class="radio pull-left" style="margin: 0;">
             <label>
               <input type="radio" ng-model="user.picks[$parent.$index]" value="{{$index}}" name="{{$parent.$index}}" ng-disabled="time > oscarStart" style="margin-top: 8px">
@@ -91,39 +91,15 @@
               <span ng-hide="nom.nominee">
                 <span class="lead">{{nom.film}}</span>
               </span>
+              <i ng-if="time > oscarStart" ng-show="award.winner===$index" class="fa fa-check fa-fw fa-2x text-success"></i>
             </label>
           </div>
           <div class="pull-right">
-            <img ng-repeat="voter in nom.users" ng-src="https://graph.facebook.com/{{users[voter].id}}/picture" alt="" height="30" data-type="success" data-title="{{users[voter].first_name}}" bs-tooltip>
+            <img ng-repeat="voter in userDist[$parent.$index].nominees[$index].users" style="margin-left: 2px;" ng-src="https://graph.facebook.com/{{users[voter].id}}/picture" alt="" height="30" data-type="success" data-title="{{users[voter].first_name}}" bs-tooltip>
           </div>
           <div class="clearfix"></div>
         </li>
       </ul>
     </div>
   </div>
-  <!-- <div class="col-md-6 col-xs-12">
-      <div ng-repeat="(name,award) in awards | filter:searchf" ng-if="$index>11" class="panel panel-primary">
-        <div class="panel-heading">
-          <h2 class="panel-title pull-left">
-            <i class="fa fa-star"></i> {{name}}
-          </h2>
-          <div class="pull-right">
-            {{award.points}} pt<span ng-if="award.points > 1">s</span>
-          </div>
-          <div class="clearfix"></div>
-        </div>
-
-        <ul class="list-group">
-          <li class="list-group-item" ng-repeat="nom in award.nominees">
-            <div class="radio">
-              <label>
-                <input type="radio" ng-model="user.picks[name]" value="{{nom.movie}}" name="{{name}}" ng-disabled="time > oscarStart" style="margin-top: 8px">
-                <span ng-class="nomClass(name, award, nom)"><span class="lead">{{nom.movie}}</span> - <em>{{nom.team}}</em>
-                </span>
-              </label>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div> -->
 </div>

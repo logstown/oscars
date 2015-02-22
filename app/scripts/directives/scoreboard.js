@@ -11,13 +11,17 @@ angular.module('oscarsApp')
         return {
             restrict: 'E',
             link: function postLink(scope, element, attrs) {
-                var w = element.parent().width() - 30;
                 var margin = 10;
+                var dur = 1000;
+                var rectHeight = 50;
+                var w = element.parent().width() - 30;
+                var h = scope.users.length * (rectHeight + margin);
 
                 var xScale = d3.scale.linear().range([0, (w - 60)])
 
                 var svg = d3.select(element[0]).append('svg')
                     .attr('width', w)
+                    .attr('height', h)
 
                 var rectsGroup = svg.append('g')
                     .attr('clas', 'rects')
@@ -35,8 +39,6 @@ angular.module('oscarsApp')
                     return d.id;
                 }
 
-                var dur = 1000;
-                var rectHeight = 30;
 
                 scope.$watch('userScores', function(newval) {
                     if (newval === undefined) {
@@ -45,9 +47,9 @@ angular.module('oscarsApp')
 
                     console.log(newval)
 
-                    var h = newval.length * (rectHeight + margin);
+                    // var h = newval.length * (rectHeight + margin);
 
-                    svg.attr('height', h)
+                    // svg.attr('height', h)
 
                     var max = d3.max(newval, function(d) {
                         return d.score;
@@ -96,7 +98,7 @@ angular.module('oscarsApp')
                     pics.enter().append('image')
                         .attr('x', 0)
                         // .text(function(d) {
-                        // 	return d.info.first_name;
+                        //  return d.info.first_name;
                         // })
                         .attr('xlink:href', function(d) {
                             return 'http://graph.facebook.com/' + d.id + '/picture';
@@ -159,26 +161,29 @@ angular.module('oscarsApp')
 
                     scores.exit().remove()
 
-                    // var names = namesGroup.selectAll('text')
-                    //     .data(newval, key)
+                    var names = namesGroup.selectAll('text')
+                        .data(newval, key)
 
-                    // names.enter().append('text')
-                    //     .attr('x', 60);
+                    names.enter().append('text')
+                        .attr('x', 60);
 
-                    // names.transition()
-                    //     .delay(dur)
-                    //     .duration(function(d, i) {
-                    //         return 500 + (i * 50)
-                    //     })
-                    //     .attr('y', function(d, i) {
-                    //         return (i * (rectHeight + margin)) + 12
-                    //     })
-                    //     .text(function(d) {
-                    //         if (scope.winner && d.score === max) {
-                    //             return d.name + ' - WINNER!'
-                    //         }
-                    //         return d.name;
-                    //     });
+                    names.transition()
+                        .delay(dur)
+                        .duration(function(d, i) {
+                            return 500 + (i * 50)
+                        })
+                        .attr('y', function(d, i) {
+                            return (i * (rectHeight + margin)) + 45
+                        })
+                        .text(function(d) {
+                            if (scope.winner && d.score === max) {
+                                return d.name + ' - WINNER!'
+                            }
+                            return d.name;
+                        });
+
+                    $scope.scoreDone = true;
+                    $scope.$apply();
                 })
             }
         };

@@ -10,18 +10,21 @@
 angular.module('oscarsApp')
     .controller('MainCtrl', function($scope, $rootScope, $firebase, $location, $timeout, $modal, Auth, User) {
 
+        $scope.winner = false;
+
         function getUserScores() {
-            $scope.winner = _.every($scope.awards, function(award) {
-                return _.has(award, 'winner')
-            })
 
             last.on('value', function(snapshot) {
+                $scope.winner = _.every($scope.awards, function(award) {
+                    return _.has(award, 'winner')
+                })
 
                 var lastAward = snapshot.val().last;
 
                 $scope.userScores = _.chain($scope.users)
+                    .filter('picks')
                     .map(function(user) {
-
+                        var lastCorrect;
                         var score = _.reduce($scope.awards, function(score, award, key) {
                             if (award.winner !== undefined && award.winner == user.picks[key]) {
                                 score += award.points;
@@ -29,7 +32,7 @@ angular.module('oscarsApp')
                             return score;
                         }, 0)
 
-                        var lastCorrect = lastAward !== '' && user.picks[lastAward] == $scope.awards[lastAward].winner
+                        lastCorrect = lastAward !== '' && user.picks[lastAward] == $scope.awards[lastAward].winner
 
                         return {
                             id: user.id,
@@ -45,13 +48,19 @@ angular.module('oscarsApp')
                     .value()
 
                 $scope.$apply();
-            })
 
+                if ($scope.winner) {
+                    getChampions();
+                    $scope.getSuperlatives()
+                }
+
+            })
         }
 
         function addPicks() {
-            angular.forEach($scope.awards, function(award, aI) {
-                angular.forEach($scope.users, function(user, uI) {
+            $scope.userDist = angular.copy($scope.awards)
+            angular.forEach($scope.userDist, function(award, aI) {
+                angular.forEach(_.filter($scope.users, 'picks'), function(user, uI) {
                     var userPick = user.picks[aI]
 
                     if (userPick === undefined) {
@@ -66,17 +75,8 @@ angular.module('oscarsApp')
             })
         }
 
-        function getFanboy() {
-            var winningCounts = _.map($scope.users, function(user) {
-                console.log(user)
-
-                if (user.picks === undefined) {
-                    return {
-                        user: 'facebook:' + user.id,
-                        movie: 'boo',
-                        count: 0
-                    }
-                }
+        function getFanboys() {
+            var winningCounts = _.map(_.filter($scope.users, 'picks'), function(user) {
                 var counts = _.countBy(user.picks, function(nomI, awardI) {
                     if (nomI === undefined) {
                         return 'stupid'
@@ -84,61 +84,134 @@ angular.module('oscarsApp')
                     return $scope.awards[awardI].nominees[nomI].film
                 })
 
+                counts = _.omit(counts, 'stupid');
                 var max = _.max(counts)
                 var movie = _.findKey(counts, function(count) {
                     return count === max
                 })
 
                 return {
-                    user: 'facebook:' + user.id,
+                    user: user,
                     movie: movie,
                     count: max
                 }
             })
 
-            console.log(winningCounts)
-
-            return _.max(winningCounts, 'count')
+            var top = _.max(winningCounts, 'count').count
+            return _.filter(winningCounts, {
+                count: top
+            })
         }
 
-        function getPeoplePerson() {
-            var peopleCounts = _.map($scope.users, function(user) {
+        function getTechAndPeople() {
+            var counts = _.map(_.filter($scope.users, 'picks'), function(user) {
 
-                if (user.picks === undefined) {
-                    return {
-                        user: 'facebook:' + user.id,
-                        count: 0
-                    }
-                }
-
-                var count = _.reduce(user.picks, function(result, nomI, awardI) {
+                var peopleCount = _.reduce(user.picks, function(result, nomI, awardI) {
                     if (nomI !== undefined && $scope.awards[awardI].nominees[nomI].nominee !== '' && $scope.awards[awardI].winner == nomI) {
                         result += 1;
                     }
                     return result;
                 }, 0)
 
+                var techCount = _.reduce(user.picks, function(result, nomI, awardI) {
+                    if (nomI !== undefined && $scope.awards[awardI].type === 'technical' && $scope.awards[awardI].winner == nomI) {
+                        result += 1;
+                    }
+                    return result;
+                }, 0)
+
                 return {
-                    user: 'facebook:' + user.id,
-                    count: count
+                    user: user,
+                    peopleCount: peopleCount,
+                    techCount: techCount
                 }
             })
 
-            console.log(peopleCounts)
+            var topTechie = _.max(counts, 'techCount').techCount
+            var techies = _.filter(counts, {
+                techCount: topTechie
+            });
+            var topPeople = _.max(counts, 'peopleCount').peopleCount
+            var peoplePeople = _.filter(counts, {
+                peopleCount: topPeople
+            });
 
-            return _.max(peopleCounts, 'count')
+            return {
+                techies: techies,
+                peoplePeople: peoplePeople
+            }
         }
 
-        function getSuperlatives() {
-            var superlatives = [{
+        function getDarkHorses() {
+            var userPoints = {}
+
+            angular.forEach($scope.awards, function(award, aI) {
+
+                var correctUsers = _.filter($scope.users, function(user) {
+                    return user.picks && user.picks[aI] !== undefined && user.picks[aI] == award.winner
+                })
+
+                angular.forEach(correctUsers, function(user) {
+                    if (userPoints[user.id] === undefined) {
+                        userPoints[user.id] = {
+                            user: user,
+                            count: 0
+                        };
+                    }
+
+                    userPoints[user.id].count += (1 / correctUsers.length)
+                })
+            })
+
+            console.log(userPoints)
+
+            var top = _.max(userPoints, 'count').count;
+            return _.filter(userPoints, {
+                count: top
+            })
+        }
+
+        function getChampions() {
+            var topScore = _.max($scope.userScores, 'score').score;
+            $scope.champions = _.filter($scope.userScores, {
+                score: topScore
+            })
+        }
+
+        $scope.getSuperlatives = function() {
+            var techAndPeople = getTechAndPeople();
+
+            $scope.superlatives = [{
                 name: 'Fanboy',
-                description: 'Chose the same movie most frequently as the winner.',
-                winner: getFanboy()
+                description: 'Picked the same movie the most amount of times.',
+                winners: getFanboys(),
+                icon: 'images/fanboy.png'
             }, {
                 name: 'People Person',
-                description: 'Chose the most winners amongst awards given to people',
-                winner: getPeoplePerson()
+                description: 'Correctly chose the most awards given to people: Best Director, Best Actor, etc.',
+                winners: techAndPeople.peoplePeople,
+                icon: 'images/people-person.png'
+            }, {
+                name: 'Techie',
+                description: 'Correctly chose the most technical awards',
+                winners: techAndPeople.techies,
+                icon: 'images/techie.jpg'
+            }, {
+                name: 'Psychic',
+                description: 'Most independent, winning picks',
+                winners: getDarkHorses(),
+                icon: 'images/psychic.png'
             }]
+
+            console.log($scope.superlatives)
+
+            $scope.endingModal = $modal({
+                title: 'We have a winner!',
+                contentTemplate: 'views/ending-modal.html',
+                show: true,
+                scope: $scope,
+                animation: 'am-fade-and-scale'
+            });
         }
 
         function afterStart() {
@@ -152,28 +225,43 @@ angular.module('oscarsApp')
                 })
 
                 $scope.awards.$loaded().then(function() {
-                    getSuperlatives()
+                    $scope.highlight = function(aI) {
+                        if ($scope.user.picks === undefined || $scope.awards[aI].winner === undefined) {
+                            return;
+                        }
 
-                    // addPicks()
-                    // getUserScores()
+                        if ($scope.user.picks[aI] == $scope.awards[aI].winner) {
+                            return 'correct'
+                        } else {
+                            return 'incorrect'
+                        }
+                    }
 
-                    // $scope.awards.$watch(function(thing) {
+                    $scope.highlightNom = function(aI, nI) {
+                        if ($scope.user.picks === undefined || $scope.awards[aI].winner === undefined) {
+                            return;
+                        }
 
-                    //     last.set({
-                    //         last: thing.key
-                    //     })
+                        if ($scope.user.picks[aI] == nI) {
+                            if (nI == $scope.awards[aI].winner) {
+                                return 'correct'
+                            } else {
+                                return 'incorrect'
+                            }
+                        }
+                    }
 
-                    //     getUserScores();
+                    addPicks()
+                    getUserScores()
 
-                    //     if ($scope.winner) {
-                    //             $scope.endingModal = $modal({
-                    //             title: 'We have a winner!',
-                    //             contentTemplate: 'views/ending-modal.html',
-                    //             show: true,
-                    //             animation: 'am-fade-and-scale'
-                    //         });
-                    //     }
-                    // })
+                    $scope.awards.$watch(function(thing) {
+
+                        last.set({
+                            last: thing.key
+                        })
+
+                        getUserScores();
+                    })
                 })
             })
         }
@@ -188,7 +276,7 @@ angular.module('oscarsApp')
         var last = new Firebase($rootScope.url + 'last')
 
         $scope.time = new Date();
-        $scope.oscarStart = new Date(2015, 1, 22, 24, -$scope.time.getTimezoneOffset())
+        $scope.oscarStart = new Date(2014, 1, 23, 1, 30 - $scope.time.getTimezoneOffset())
 
         $scope.auth = Auth;
         var user = $scope.auth.$getAuth();
@@ -199,7 +287,7 @@ angular.module('oscarsApp')
             "click": "logout()"
         }];
 
-        if ($scope.time > $scope.oscarStart) {
+        if ($scope.time < $scope.oscarStart) {
             var hasNotRun = true;
 
             User(user.auth.uid).$bindTo($scope, 'user').then(function() {

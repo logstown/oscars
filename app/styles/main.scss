@@ -11,7 +11,7 @@ body, html {
   // background-color: black;
   // color: white;
 }
-.panel, .navbar, h2 {
+.panel, .navbar {
   font-family: 'Oswald', sans-serif;
 }
 .navbar-brand {
@@ -29,6 +29,39 @@ body, html {
     margin-bottom: 0;
     line-height: 40px;
     padding-bottom: 19px;
+  }
+}
+.correct {
+  background-color: lightgreen;
+}
+.incorrect {
+  background-color: rgb(255, 192, 203);
+}
+.title {
+  text-align: center;
+  .fa-star {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+}
+.superlatives {
+  width: 100%;
+  .first {
+    td {
+      padding-top: 20px;
+      vertical-align: middle;
+      border-top: 2px solid lightgrey;
+    }
+  }
+  .second {
+    td {
+      padding-bottom: 20px;
+      // vertical-align: bottom;
+    }
+  }
+  .big {
+    font-size: 150%;
+    padding-left: 15px;
   }
 }
 .footer, .header {
