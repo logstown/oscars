@@ -276,7 +276,7 @@ angular.module('oscarsApp')
         var last = new Firebase($rootScope.url + 'last')
 
         $scope.time = new Date();
-        $scope.oscarStart = new Date(2014, 1, 23, 1, 30 - $scope.time.getTimezoneOffset())
+        $scope.oscarStart = new Date(2015, 1, 23, 1, 30 - $scope.time.getTimezoneOffset())
 
         $scope.auth = Auth;
         var user = $scope.auth.$getAuth();
