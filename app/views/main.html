@@ -45,6 +45,7 @@
 </div>
 
 <div ng-if="time > oscarStart && user" style="margin-bottom: 50px;">
+  <span class="pull-left">Last award: <a href="#award-{{lastAward}}" du-smooth-scroll class="btn btn-info">{{awards[lastAward].award}}</a></span>
   <button ng-show="winner" class="btn btn-info pull-right" ng-click="getSuperlatives()">Superlatives!</button>
   <div class="text-center" style="margin-bottom: 40px;">
     <h1>Score Board <small>(updates automatically)</small></h1>

@@ -16,7 +16,7 @@
     <td>
       -
     </td>
-    <td>
+    <td style="padding-left: 10px">
       <em>{{superlative.description}}</em>
     </td>
   </tr>
@@ -24,8 +24,10 @@
     <td colspan="2" class="text-right" style="padding-right: 5px;">
       goes to...
     </td>
-    <td colspan="2" class="big">
-      <div ng-repeat="winner in superlative.winners"><img ng-src="https://graph.facebook.com/{{winner.user.id}}/picture" height="50px;" style="margin-right: 10px;" alt="">{{winner.user.name}}</div>
+    <td colspan="2">
+      <div ng-repeat-start="winner in superlative.winners" class="big"><img ng-src="https://graph.facebook.com/{{winner.user.id}}/picture" height="50px;" style="margin-right: 10px;" alt="">{{winner.user.name}}
+      </div>
+      <div ng-repeat-end ng-if="$parent.$first">...chose <strong>{{winner.movie}}</strong> {{winner.count}} times!</div>
     </td>
   </tr>
 </table>

@@ -181,9 +181,6 @@ angular.module('oscarsApp')
                             }
                             return d.name;
                         });
-
-                    $scope.scoreDone = true;
-                    $scope.$apply();
                 })
             }
         };

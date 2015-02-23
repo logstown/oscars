@@ -19,7 +19,7 @@ angular.module('oscarsApp')
                     return _.has(award, 'winner')
                 })
 
-                var lastAward = snapshot.val().last;
+                $scope.lastAward = snapshot.val().last;
 
                 $scope.userScores = _.chain($scope.users)
                     .filter('picks')
@@ -32,7 +32,7 @@ angular.module('oscarsApp')
                             return score;
                         }, 0)
 
-                        lastCorrect = lastAward !== '' && user.picks[lastAward] == $scope.awards[lastAward].winner
+                        lastCorrect = $scope.lastAward !== '' && user.picks[$scope.lastAward] == $scope.awards[$scope.lastAward].winner
 
                         return {
                             id: user.id,
@@ -183,22 +183,22 @@ angular.module('oscarsApp')
 
             $scope.superlatives = [{
                 name: 'Fanboy',
-                description: 'Picked the same movie the most amount of times.',
+                description: 'Chose the same movie the most amount of times.',
                 winners: getFanboys(),
                 icon: 'images/fanboy.png'
             }, {
                 name: 'People Person',
-                description: 'Correctly chose the most awards given to people: Best Director, Best Actor, etc.',
+                description: 'Correctly predicted the most awards given to people: Best Director, Best Actor, etc.',
                 winners: techAndPeople.peoplePeople,
                 icon: 'images/people-person.png'
             }, {
                 name: 'Techie',
-                description: 'Correctly chose the most technical awards',
+                description: 'Correctly predicted the most technical awards: Film Editing, Sound Mixing, etc.',
                 winners: techAndPeople.techies,
                 icon: 'images/techie.jpg'
             }, {
                 name: 'Psychic',
-                description: 'Most independent, winning picks',
+                description: 'Correctly predicted awards that went against the opinion of the crowd. Arguably almost as prestigious as the overall winner. Contact Logan if you want more details.',
                 winners: getDarkHorses(),
                 icon: 'images/psychic.png'
             }]
