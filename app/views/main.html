@@ -96,7 +96,7 @@
             </label>
           </div>
           <div class="pull-right">
-            <img ng-repeat="voter in userDist[$parent.$index].nominees[$index].users" style="margin-left: 2px;" ng-src="https://graph.facebook.com/{{users[voter].id}}/picture" alt="" height="30" data-type="success" data-title="{{users[voter].first_name}}" bs-tooltip>
+            <img ng-repeat="voter in userDist[$parent.$index].nominees[$index].users" style="margin-left: 2px;" ng-src="https://graph.facebook.com/{{voter}}/picture" alt="" height="30" data-type="success" data-title="{{getTooltip(voter)}}" bs-tooltip>
           </div>
           <div class="clearfix"></div>
         </li>

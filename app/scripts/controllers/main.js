@@ -60,7 +60,7 @@ angular.module('oscarsApp')
         function addPicks() {
             $scope.userDist = angular.copy($scope.awards)
             angular.forEach($scope.userDist, function(award, aI) {
-                angular.forEach(_.filter($scope.users, 'picks'), function(user, uI) {
+                angular.forEach(_.filter($scope.users, 'picks'), function(user) {
                     var userPick = user.picks[aI]
 
                     if (userPick === undefined) {
@@ -70,9 +70,11 @@ angular.module('oscarsApp')
                     if (award.nominees[userPick].users === undefined) {
                         award.nominees[userPick].users = [];
                     }
-                    award.nominees[userPick].users.push(uI)
+                    award.nominees[userPick].users.push(user.id)
                 })
             })
+
+            console.log($scope.userDist)
         }
 
         function getFanboys() {
@@ -249,6 +251,12 @@ angular.module('oscarsApp')
                                 return 'incorrect'
                             }
                         }
+                    }
+
+                    $scope.getTooltip = function(voter) {
+                        return _.find($scope.users, {
+                            id: voter
+                        }).first_name;
                     }
 
                     addPicks()
