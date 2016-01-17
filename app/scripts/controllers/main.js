@@ -284,7 +284,7 @@ angular.module('oscarsApp')
         var last = new Firebase($rootScope.url + 'last')
 
         $scope.time = new Date();
-        $scope.oscarStart = new Date(2015, 1, 23, 1, 30 - $scope.time.getTimezoneOffset())
+        $scope.oscarStart = new Date(2016, 1, 29, 1, 30 - $scope.time.getTimezoneOffset())
 
         $scope.auth = Auth;
         var user = $scope.auth.$getAuth();
@@ -298,21 +298,22 @@ angular.module('oscarsApp')
         if ($scope.time < $scope.oscarStart) {
             var hasNotRun = true;
 
-            User(user.auth.uid).$bindTo($scope, 'user').then(function() {
-                $scope.$watch('user', function(newVal, oldVal) {
-                    var newVals = _.values(newVal.picks)
-                    var oldVals = _.values(oldVal.picks)
-                    if (_.every(newVals) && newVals.length === 23 && (!_.every(oldVals) || oldVals.length < 23)) {
-                        console.log('done')
-                        $modal({
-                            title: 'All Done!',
-                            content: 'Come back during the Oscars Ceremony to check on your progress.',
-                            show: true,
-                            animation: 'am-fade-and-scale'
-                        });
-                    }
-                }, true)
-            })
+            User(user.auth.uid).$bindTo($scope, 'user')
+                .then(function() {
+                    $scope.$watch('user', function(newVal, oldVal) {
+                        var newVals = _.values(newVal.picks)
+                        var oldVals = _.values(oldVal.picks)
+                        if (_.every(newVals) && newVals.length === 23 && (!_.every(oldVals) || oldVals.length < 23)) {
+                            console.log('done')
+                            $modal({
+                                title: 'All Done!',
+                                content: 'Come back during the Oscars Ceremony to check on your progress.',
+                                show: true,
+                                animation: 'am-fade-and-scale'
+                            });
+                        }
+                    }, true)
+                })
 
             $scope.$watch('time', function() {
                 $timeout(function() {
