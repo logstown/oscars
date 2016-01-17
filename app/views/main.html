@@ -82,7 +82,7 @@
       </div>
 
       <ul class="list-group">
-        <li class="list-group-item" ng-repeat="nom in award.nominees" ng-class="highlightNom($parent.$index, $index)">
+        <li class="list-group-item" ng-repeat="nom in award.nominees" ng-class="highlightNom($parent.$index, $index)" ng-click="createWinner($parent.$index, $index)">
           <div class="radio pull-left" style="margin: 0;">
             <label>
               <input type="radio" ng-model="user.picks[$parent.$index]" value="{{$index}}" name="{{$parent.$index}}" ng-disabled="time > oscarStart" style="margin-top: 8px">

@@ -47,7 +47,7 @@ angular.module('oscarsApp')
                     })
                     .value()
 
-                $scope.$apply();
+                // $scope.$apply();
 
                 if ($scope.winner) {
                     getChampions();
@@ -259,6 +259,12 @@ angular.module('oscarsApp')
                         }).first_name;
                     }
 
+                    $scope.createWinner = function(aI, nI) {
+                        var award = $scope.awards.$getRecord(aI)
+                        award.winner = nI;
+                        $scope.awards.$save(award);
+                    }
+
                     addPicks()
                     getUserScores()
 
@@ -273,6 +279,13 @@ angular.module('oscarsApp')
                 })
             })
         }
+
+        var test = new Firebase($rootScope.url + "admin");
+        test.child("admin").once("value", function(snap) {
+            $scope.admin = true;
+        }, function(err) {
+            $scope.admin = false;
+        });
 
         var ref = new Firebase($rootScope.url + 'awards');
 
