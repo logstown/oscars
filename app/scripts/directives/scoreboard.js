@@ -55,7 +55,12 @@ angular.module('oscarsApp')
                         return d.score;
                     })
 
-                    xScale.domain([0, 34])
+                    var xUppper = _.reduce(scope.awards, function(sum, award, key) {
+                        sum += award.points
+                        return sum;
+                    }, 0)
+
+                    xScale.domain([0, xUppper])
 
                     var rects = rectsGroup.selectAll('rect')
                         .data(newval, key)
