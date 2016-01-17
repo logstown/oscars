@@ -221,63 +221,65 @@ angular.module('oscarsApp')
             var usersSync = $firebase(usersRef);
             $scope.users = usersSync.$asArray();
 
-            $scope.users.$loaded().then(function() {
-                $scope.user = _.find($scope.users, {
-                    id: user.facebook.id
-                })
-
-                $scope.awards.$loaded().then(function() {
-                    $scope.highlight = function(aI) {
-                        if ($scope.user.picks === undefined || $scope.awards[aI].winner === undefined) {
-                            return;
-                        }
-
-                        if ($scope.user.picks[aI] == $scope.awards[aI].winner) {
-                            return 'correct'
-                        } else {
-                            return 'incorrect'
-                        }
-                    }
-
-                    $scope.highlightNom = function(aI, nI) {
-                        if ($scope.user.picks === undefined || $scope.awards[aI].winner === undefined) {
-                            return;
-                        }
-
-                        if ($scope.user.picks[aI] == nI) {
-                            if (nI == $scope.awards[aI].winner) {
-                                return 'correct'
-                            } else {
-                                return 'incorrect'
-                            }
-                        }
-                    }
-
-                    $scope.getTooltip = function(voter) {
-                        return _.find($scope.users, {
-                            id: voter
-                        }).first_name;
-                    }
-
-                    $scope.createWinner = function(aI, nI) {
-                        var award = $scope.awards.$getRecord(aI)
-                        award.winner = nI;
-                        $scope.awards.$save(award);
-                    }
-
-                    addPicks()
-                    getUserScores()
-
-                    $scope.awards.$watch(function(thing) {
-
-                        last.set({
-                            last: thing.key
-                        })
-
-                        getUserScores();
+            $scope.users.$loaded()
+                .then(function() {
+                    $scope.user = _.find($scope.users, {
+                        id: user.facebook.id
                     })
+
+                    $scope.awards.$loaded()
+                        .then(function() {
+                            $scope.highlight = function(aI) {
+                                if ($scope.user.picks === undefined || $scope.awards[aI].winner === undefined) {
+                                    return;
+                                }
+
+                                if ($scope.user.picks[aI] == $scope.awards[aI].winner) {
+                                    return 'correct'
+                                } else {
+                                    return 'incorrect'
+                                }
+                            }
+
+                            $scope.highlightNom = function(aI, nI) {
+                                if ($scope.user.picks === undefined || $scope.awards[aI].winner === undefined) {
+                                    return;
+                                }
+
+                                if ($scope.user.picks[aI] == nI) {
+                                    if (nI == $scope.awards[aI].winner) {
+                                        return 'correct'
+                                    } else {
+                                        return 'incorrect'
+                                    }
+                                }
+                            }
+
+                            $scope.getTooltip = function(voter) {
+                                return _.find($scope.users, {
+                                    id: voter
+                                }).first_name;
+                            }
+
+                            $scope.createWinner = function(aI, nI) {
+                                var award = $scope.awards.$getRecord(aI)
+                                award.winner = nI;
+                                $scope.awards.$save(award);
+                            }
+
+                            addPicks()
+                            getUserScores()
+
+                            $scope.awards.$watch(function(thing) {
+
+                                last.set({
+                                    last: thing.key
+                                })
+
+                                getUserScores();
+                            })
+                        })
                 })
-            })
         }
 
         var test = new Firebase($rootScope.url + "admin");

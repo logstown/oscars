@@ -5,73 +5,87 @@ $link-color: black;
 @import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
 // endbower
 @import url(https://fonts.googleapis.com/css?family=Oswald:400,300);
+
 /* Everything but the jumbotron gets side spacing for mobile first views */
 
-body, html {
-  // background-color: black;
-  // color: white;
+body,
+html {
+    // background-color: black;
+    // color: white;
 }
-.panel, .navbar {
-  font-family: 'Oswald', sans-serif;
+
+.panel,
+.navbar {
+    font-family: 'Oswald', sans-serif;
 }
+
 .navbar-brand {
-  font-size: 29px;
-  i {
-    color: #af9751;
-    padding-left: 10px;
-    padding-right: 10px;
-  }
+    font-size: 29px;
+    i {
+        color: #af9751;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
 }
+
 .header {
-  border-bottom: 1px solid #e5e5e5;
-  h3 {
-    margin-top: 0;
-    margin-bottom: 0;
-    line-height: 40px;
-    padding-bottom: 19px;
-  }
+    border-bottom: 1px solid #e5e5e5;
+    h3 {
+        margin-top: 0;
+        margin-bottom: 0;
+        line-height: 40px;
+        padding-bottom: 19px;
+    }
 }
+
 .correct {
-  background-color: lightgreen;
+    background-color: lightgreen;
 }
+
 .incorrect {
-  background-color: rgb(255, 192, 203);
+    background-color: rgb(255, 192, 203);
 }
+
 .title {
-  text-align: center;
-  .fa-star {
-    padding-left: 5px;
-    padding-right: 5px;
-  }
+    text-align: center;
+    .fa-star {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
 }
+
 .superlatives {
-  width: 100%;
-  .first {
-    td {
-      padding-top: 20px;
-      vertical-align: middle;
-      border-top: 2px solid lightgrey;
+    width: 100%;
+    .first {
+        td {
+            padding-top: 20px;
+            vertical-align: middle;
+            border-top: 2px solid lightgrey;
+        }
     }
-  }
-  .second {
-    td {
-      padding-bottom: 20px;
-      // vertical-align: bottom;
+    .second {
+        td {
+            padding-bottom: 20px;
+            // vertical-align: bottom;
+        }
     }
-  }
-  .big {
-    font-size: 150%;
+    .big {
+        font-size: 150%;
+        padding-left: 15px;
+    }
+}
+
+.footer,
+.header {
     padding-left: 15px;
-  }
+    padding-right: 15px;
 }
-.footer, .header {
-  padding-left: 15px;
-  padding-right: 15px;
-}
+
+
 /* Custom page footer */
 
 .footer {
-  padding-top: 19px;
-  color: #777;
-  border-top: 1px solid #e5e5e5;
+    padding-top: 19px;
+    color: #777;
+    border-top: 1px solid #e5e5e5;
 }

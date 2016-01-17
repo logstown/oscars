@@ -17,7 +17,8 @@ angular.module('oscarsApp')
                 var w = element.parent().width() - 30;
                 var h = scope.users.length * (rectHeight + margin);
 
-                var xScale = d3.scale.linear().range([0, (w - 60)])
+                var xScale = d3.scale.linear()
+                    .range([0, (w - 60)])
 
                 var svg = d3.select(element[0]).append('svg')
                     .attr('width', w)

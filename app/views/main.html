@@ -1,106 +1,84 @@
 <nav class="navbar navbar-inverse" style="background-color: black;">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <img src="images/statue.jpg" class="img-responsive pull-left" style="height: 50px; display: inline-block;"></img>
-      <a class="navbar-brand" href style="margin-left: -5px">Jenkins Family Oscar Competition
-      </a>
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <img src="images/statue.jpg" class="img-responsive pull-left" style="height: 50px; display: inline-block;"></img>
+            <a class="navbar-brand" href style="margin-left: -5px">Jenkins Family Oscar Competition</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <img ng-src="https://graph.facebook.com/{{user.id}}/picture" height="50px;" style="margin-right: 10px;" alt="">
+                </li>
+                <li class="dropdown pull-right" dropdown on-toggle="toggled(open)">
+                    <a href data-animation="am-flip-x" bs-dropdown="dropdown">{{user.name}}<span class="caret"></span></a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
     </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav navbar-right">
-        <li>
-          <img ng-src="https://graph.facebook.com/{{user.id}}/picture" height="50px;" style="margin-right: 10px;" alt="">
-        </li>
-        <li class="dropdown pull-right" dropdown on-toggle="toggled(open)">
-          <a href data-animation="am-flip-x" bs-dropdown="dropdown">
-            {{user.name}} <span class="caret"></span>
-          </a>
-          <!-- <ul class="dropdown-menu">
-        <li>
-          <a href ng-click="auth.$unauth()">logout</a>
-        </li>
-      </ul> -->
-        </li>
-      </ul>
-    </div>
-    <!-- /.navbar-collapse -->
-  </div>
-  <!-- /.container-fluid -->
+    <!-- /.container-fluid -->
 </nav>
-
-
 <div ng-show="time < oscarStart" class="jumbotron">
-  <h2 class="text-center">
+    <h2 class="text-center">
     <i class="fa fa-clock-o"></i> Starts in
     <timer end-time="oscarStart"><span ng-show="days > 0">{{days}} day<span ng-hide="days===1">s</span></span><span ng-show="hours > 0"><span ng-show="days > 0">,</span> {{hours}} hour<span ng-hide="hours===1">s</span></span><span ng-show="minutes > 0"><span ng-show="hours > 0">,</span> {{minutes}} minute<span ng-hide="minutes===1">s</span></span><span ng-show="seconds > 0"><span ng-show="minutes > 0">,</span> {{seconds}} second<span ng-hide="seconds===1">s</span></span>.</timer>
   </h2>
 </div>
-
 <div ng-if="time > oscarStart && user" style="margin-bottom: 50px;">
-  <span class="pull-left">Last award: <a href="#award-{{lastAward}}" du-smooth-scroll class="btn btn-info">{{awards[lastAward].award}}</a></span>
-  <button ng-show="winner" class="btn btn-info pull-right" ng-click="getSuperlatives()">Superlatives!</button>
-  <div class="text-center" style="margin-bottom: 40px;">
-    <h1>Score Board <small>(updates automatically)</small></h1>
-    <span>Last pick was <em>correct</em>:</span>
-    <div style="display: inline-block; vertical-align: middle; height: 15px; width: 15px; background-color: #B4F59A"></div>
-    <span style="margin-left: 30px;">Last pick was <em>incorrect</em>:</span>
-    <div style="display: inline-block; vertical-align: middle; height: 15px; width: 15px; background-color: pink"></div>
-  </div>
-  <scoreboard></scoreboard>
+    <span class="pull-left">Last award: <a href="#award-{{lastAward}}" du-smooth-scroll class="btn btn-info">{{awards[lastAward].award}}</a></span>
+    <button ng-show="winner" class="btn btn-info pull-right" ng-click="getSuperlatives()">Superlatives!</button>
+    <div class="text-center" style="margin-bottom: 40px;">
+        <h1>Score Board <small>(updates automatically)</small></h1>
+        <span>Last pick was <em>correct</em>:</span>
+        <div style="display: inline-block; vertical-align: middle; height: 15px; width: 15px; background-color: #B4F59A"></div>
+        <span style="margin-left: 30px;">Last pick was <em>incorrect</em>:</span>
+        <div style="display: inline-block; vertical-align: middle; height: 15px; width: 15px; background-color: pink"></div>
+    </div>
+    <scoreboard></scoreboard>
 </div>
-
 <div ng-if="user" class="row">
-  <div class="col-md-3 hidden-sm hidden-xs">
-    <div class="affix hidden-print" bs-affix data-offset-top="-15">
-      <ul class="nav nav-stacked nav-pills award-list">
-        <li ng-repeat="award in awards" ng-class="highlight($index)" style="margin-top: 1px;" data-target="#award-{{$index}}" bs-scrollspy>
-          <a href="#award-{{$index}}" du-smooth-scroll style="padding: 3px 15px;">
-            {{award.award}} <i ng-if="time < oscarStart" ng-show="user.picks[$index]"class="fa fa-check fa-fw text-success"></i>
-          </a>
-        </li>
-      </ul>
-    </div>
-  </div>
-  <div class="col-md-9">
-    <div id="award-{{$index}}" ng-repeat="award in awards" class="panel panel-default">
-      <div class="panel-heading" style="background-color: #af9751; color: black">
-        <h1 class="panel-title pull-left" style="text-shadow: 2px 2px 2px lightgrey; font-size: 20px;">
-            <i class="fa fa-star"></i> {{award.award}}
-          </h1>
-        <div class="pull-right">
-          <span class="badge alert-success">{{award.points}} pt<span ng-show="award.points > 1">s</span> </span>
+    <div class="col-md-3 hidden-sm hidden-xs">
+        <div class="affix hidden-print" bs-affix data-offset-top="-15">
+            <ul class="nav nav-stacked nav-pills award-list">
+                <li ng-repeat="award in awards" ng-class="highlight($index)" style="margin-top: 1px;" data-target="#award-{{$index}}" bs-scrollspy>
+                    <a href="#award-{{$index}}" du-smooth-scroll style="padding: 3px 15px;">{{award.award}} <i ng-if="time < oscarStart" ng-show="user.picks[$index]"class="fa fa-check fa-fw text-success"></i></a>
+                </li>
+            </ul>
         </div>
-        <div class="clearfix"></div>
-      </div>
-
-      <ul class="list-group">
-        <li class="list-group-item" ng-repeat="nom in award.nominees" ng-class="highlightNom($parent.$index, $index)" ng-click="createWinner($parent.$index, $index)">
-          <div class="radio pull-left" style="margin: 0;">
-            <label>
-              <input type="radio" ng-model="user.picks[$parent.$index]" value="{{$index}}" name="{{$parent.$index}}" ng-disabled="time > oscarStart" style="margin-top: 8px">
-              <span ng-show="nom.nominee">
-                <span class="lead">{{nom.nominee}}</span> - <span style="text-decoration: underline;">{{nom.film}}</span>
-              </span>
-              <span ng-hide="nom.nominee">
-                <span class="lead">{{nom.film}}</span>
-              </span>
-              <i ng-if="time > oscarStart" ng-show="award.winner===$index" class="fa fa-check fa-fw fa-2x text-success"></i>
-            </label>
-          </div>
-          <div class="pull-right">
-            <img ng-repeat="voter in userDist[$parent.$index].nominees[$index].users" style="margin-left: 2px;" ng-src="https://graph.facebook.com/{{voter}}/picture" alt="" height="30" data-type="success" data-title="{{getTooltip(voter)}}" bs-tooltip>
-          </div>
-          <div class="clearfix"></div>
-        </li>
-      </ul>
     </div>
-  </div>
+    <div class="col-md-9">
+        <div id="award-{{$index}}" ng-repeat="award in awards" class="panel panel-default">
+            <div class="panel-heading" style="background-color: #af9751; color: black">
+                <h1 class="panel-title pull-left" style="text-shadow: 2px 2px 2px lightgrey; font-size: 20px;"><i class="fa fa-star"></i> {{award.award}}</h1>
+                <div class="pull-right">
+                    <span class="badge alert-success">{{award.points}} pt<span ng-show="award.points > 1">s</span> </span>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat="nom in award.nominees" ng-class="highlightNom($parent.$index, $index)" ng-click="createWinner($parent.$index, $index)">
+                    <div class="radio pull-left" style="margin: 0;">
+                        <label>
+                            <input type="radio" ng-model="user.picks[$parent.$index]" value="{{$index}}" name="{{$parent.$index}}" ng-disabled="time > oscarStart" style="margin-top: 8px">
+                            <span ng-show="nom.nominee"><span class="lead">{{nom.nominee}}</span> - <span style="text-decoration: underline;">{{nom.film}}</span></span>
+                            <span ng-hide="nom.nominee"><span class="lead">{{nom.film}}</span></span>
+                            <i ng-if="time > oscarStart" ng-show="award.winner===$index" class="fa fa-check fa-fw fa-2x text-success"></i>
+                        </label>
+                    </div>
+                    <div class="pull-right">
+                        <img ng-repeat="voter in userDist[$parent.$index].nominees[$index].users" style="margin-left: 2px;" ng-src="https://graph.facebook.com/{{voter}}/picture" alt="" height="30" data-type="success" data-title="{{getTooltip(voter)}}" bs-tooltip>
+                    </div>
+                    <div class="clearfix"></div>
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>
