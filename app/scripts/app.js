@@ -11,11 +11,8 @@
 angular
     .module('oscarsApp', [
         'ngAnimate',
-        'ngCookies',
         'ngMessages',
-        'ngResource',
         'ngRoute',
-        'ngSanitize',
         'ngTouch',
         'firebase',
         'mgcrea.ngStrap',
