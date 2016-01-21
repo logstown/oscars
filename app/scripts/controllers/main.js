@@ -8,7 +8,7 @@
  * Controller of the oscarsApp
  */
 angular.module('oscarsApp')
-    .controller('MainCtrl', function($scope, $rootScope, $firebase, $location, $timeout, $modal, Auth, User) {
+    .controller('MainCtrl', function($scope, $rootScope, $firebaseArray, $location, $timeout, $modal, Auth, User) {
 
         $scope.winner = false;
 
@@ -26,13 +26,13 @@ angular.module('oscarsApp')
                     .map(function(user) {
                         var lastCorrect;
                         var score = _.reduce($scope.awards, function(score, award, key) {
-                            if (award.winner !== undefined && award.winner == user.picks[key]) {
+                            if (award.winner !== undefined && award.winner === user.picks[key]) {
                                 score += award.points;
                             }
                             return score;
                         }, 0)
 
-                        lastCorrect = $scope.lastAward !== '' && user.picks[$scope.lastAward] == $scope.awards[$scope.lastAward].winner
+                        lastCorrect = $scope.lastAward !== '' && user.picks[$scope.lastAward] === $scope.awards[$scope.lastAward].winner
 
                         return {
                             id: user.id,
@@ -109,14 +109,14 @@ angular.module('oscarsApp')
             var counts = _.map(_.filter($scope.users, 'picks'), function(user) {
 
                 var peopleCount = _.reduce(user.picks, function(result, nomI, awardI) {
-                    if (nomI !== undefined && $scope.awards[awardI].nominees[nomI].nominee !== '' && $scope.awards[awardI].winner == nomI) {
+                    if (nomI !== undefined && $scope.awards[awardI].nominees[nomI].nominee !== '' && $scope.awards[awardI].winner === nomI) {
                         result += 1;
                     }
                     return result;
                 }, 0)
 
                 var techCount = _.reduce(user.picks, function(result, nomI, awardI) {
-                    if (nomI !== undefined && $scope.awards[awardI].type === 'technical' && $scope.awards[awardI].winner == nomI) {
+                    if (nomI !== undefined && $scope.awards[awardI].type === 'technical' && $scope.awards[awardI].winner === nomI) {
                         result += 1;
                     }
                     return result;
@@ -150,7 +150,7 @@ angular.module('oscarsApp')
             angular.forEach($scope.awards, function(award, aI) {
 
                 var correctUsers = _.filter($scope.users, function(user) {
-                    return user.picks && user.picks[aI] !== undefined && user.picks[aI] == award.winner
+                    return user.picks && user.picks[aI] !== undefined && user.picks[aI] === award.winner
                 })
 
                 angular.forEach(correctUsers, function(user) {
@@ -218,8 +218,7 @@ angular.module('oscarsApp')
 
         function afterStart() {
             var usersRef = new Firebase($rootScope.url + "users");
-            var usersSync = $firebase(usersRef);
-            $scope.users = usersSync.$asArray();
+            $scope.users = $firebaseArray(usersRef)
 
             $scope.users.$loaded()
                 .then(function() {
@@ -234,7 +233,7 @@ angular.module('oscarsApp')
                                     return;
                                 }
 
-                                if ($scope.user.picks[aI] == $scope.awards[aI].winner) {
+                                if ($scope.user.picks[aI] === $scope.awards[aI].winner) {
                                     return 'correct'
                                 } else {
                                     return 'incorrect'
@@ -246,8 +245,8 @@ angular.module('oscarsApp')
                                     return;
                                 }
 
-                                if ($scope.user.picks[aI] == nI) {
-                                    if (nI == $scope.awards[aI].winner) {
+                                if ($scope.user.picks[aI] === nI) {
+                                    if (nI === $scope.awards[aI].winner) {
                                         return 'correct'
                                     } else {
                                         return 'incorrect'
@@ -290,16 +289,12 @@ angular.module('oscarsApp')
         });
 
         var ref = new Firebase($rootScope.url + 'awards');
-
-        // create an AngularFire reference to the dataf
-        var sync = $firebase(ref);
-        // download the data into a local object
-        $scope.awards = sync.$asArray();
+        $scope.awards = $firebaseArray(ref);;
 
         var last = new Firebase($rootScope.url + 'last')
 
         $scope.time = new Date();
-        $scope.oscarStart = new Date(2016, 1, 29, 1, 30 - $scope.time.getTimezoneOffset())
+        $scope.oscarStart = new Date(2015, 1, 29, 1, 30 - $scope.time.getTimezoneOffset())
 
         $scope.auth = Auth;
         var user = $scope.auth.$getAuth();

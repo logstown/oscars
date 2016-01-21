@@ -8,7 +8,7 @@
  * Controller of the oscarsApp
  */
 angular.module('oscarsApp')
-    .controller('LoginCtrl', function($scope, $rootScope, $firebase, $location, $timeout, Auth, currentAuth) {
+    .controller('LoginCtrl', function($scope, $rootScope, $firebaseObject, $location, $timeout, Auth, currentAuth) {
         if (currentAuth !== null) {
             $location.path('/')
         }
@@ -21,14 +21,15 @@ angular.module('oscarsApp')
 
                     ref.on("value", function(snapshot) {
                         if (snapshot.val() === null) {
-                            var sync = $firebase(ref);
+                            var sync = $firebaseObject(ref);
 
                             // var ref2 = new Firebase($rootScope.url + 'picks/' + result.auth.uid)
                             // var sync2 = $firebase(ref2)
                             // download the data into a (psuedo read-only), sorted array
                             // all server changes are applied in realtime
-                            sync.$set(result.facebook.cachedUserProfile)
-                                // sync2.$set('')
+                            sync = result.facebook.cachedUserProfile;
+                            sync.$save();
+                            // sync2.$set('')
                         }
                     }, function(errorObject) {
                         console.warn("The read failed: " + errorObject.code);
