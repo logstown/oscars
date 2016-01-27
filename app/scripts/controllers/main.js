@@ -10,7 +10,66 @@
 angular.module('oscarsApp')
     .controller('MainCtrl', function($scope, $rootScope, $firebaseArray, $location, $timeout, $modal, Auth, User) {
 
+        // var test = new Firebase($rootScope.url + "admin");
+        // test.child("admin").once("value", function(snap) {
+        //     $scope.admin = true;
+        // }, function(err) {
+        //     $scope.admin = false;
+        // });
+
         $scope.winner = false;
+
+        var ref = new Firebase($rootScope.url + 'awards');
+        $scope.awards = $firebaseArray(ref);
+
+        var last = new Firebase($rootScope.url + 'last')
+
+        $scope.time = new Date();
+        $scope.oscarStart = new Date(2015, 1, 29, 1, 30 - $scope.time.getTimezoneOffset())
+
+        $scope.auth = Auth;
+        var user = $scope.auth.$getAuth();
+
+
+        $scope.dropdown = [{
+            "text": "Logout",
+            "click": "logout()"
+        }];
+
+        if ($scope.time < $scope.oscarStart) {
+            var hasNotRun = true;
+
+            User(user.auth.uid).$bindTo($scope, 'user')
+                .then(function() {
+                    $scope.$watch('user', function(newVal, oldVal) {
+                        var newVals = _.values(newVal.picks)
+                        var oldVals = _.values(oldVal.picks)
+                        if (_.every(newVals) && newVals.length === 23 && (!_.every(oldVals) || oldVals.length < 23)) {
+                            console.log('done')
+                            $modal({
+                                title: 'All Done!',
+                                content: 'Come back during the Oscars Ceremony to check on your progress.',
+                                show: true,
+                                animation: 'am-fade-and-scale'
+                            });
+                        }
+                    }, true)
+                })
+
+            $scope.$watch('time', function() {
+                $timeout(function() {
+                    $scope.time = new Date();
+                    if ($scope.time.getTime() >= $scope.oscarStart.getTime() && hasNotRun) {
+                        afterStart()
+                        hasNotRun = false
+                    }
+                }, 1000);
+            });
+
+
+        } else {
+            afterStart()
+        }
 
         function getUserScores() {
 
@@ -270,6 +329,7 @@ angular.module('oscarsApp')
                             getUserScores()
 
                             $scope.awards.$watch(function(thing) {
+                                console.log(thing)
 
                                 last.set({
                                     last: thing.key
@@ -279,65 +339,6 @@ angular.module('oscarsApp')
                             })
                         })
                 })
-        }
-
-        var test = new Firebase($rootScope.url + "admin");
-        test.child("admin").once("value", function(snap) {
-            $scope.admin = true;
-        }, function(err) {
-            $scope.admin = false;
-        });
-
-        var ref = new Firebase($rootScope.url + 'awards');
-        $scope.awards = $firebaseArray(ref);;
-
-        var last = new Firebase($rootScope.url + 'last')
-
-        $scope.time = new Date();
-        $scope.oscarStart = new Date(2015, 1, 29, 1, 30 - $scope.time.getTimezoneOffset())
-
-        $scope.auth = Auth;
-        var user = $scope.auth.$getAuth();
-
-
-        $scope.dropdown = [{
-            "text": "Logout",
-            "click": "logout()"
-        }];
-
-        if ($scope.time < $scope.oscarStart) {
-            var hasNotRun = true;
-
-            User(user.auth.uid).$bindTo($scope, 'user')
-                .then(function() {
-                    $scope.$watch('user', function(newVal, oldVal) {
-                        var newVals = _.values(newVal.picks)
-                        var oldVals = _.values(oldVal.picks)
-                        if (_.every(newVals) && newVals.length === 23 && (!_.every(oldVals) || oldVals.length < 23)) {
-                            console.log('done')
-                            $modal({
-                                title: 'All Done!',
-                                content: 'Come back during the Oscars Ceremony to check on your progress.',
-                                show: true,
-                                animation: 'am-fade-and-scale'
-                            });
-                        }
-                    }, true)
-                })
-
-            $scope.$watch('time', function() {
-                $timeout(function() {
-                    $scope.time = new Date();
-                    if ($scope.time.getTime() >= $scope.oscarStart.getTime() && hasNotRun) {
-                        afterStart()
-                        hasNotRun = false
-                    }
-                }, 1000);
-            });
-
-
-        } else {
-            afterStart()
         }
 
         $scope.logout = function() {
